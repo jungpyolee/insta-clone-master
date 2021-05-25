@@ -58,7 +58,7 @@ export function settingUser(data) {
     username: data.username,
     nickname: data.nickname,
     description: data.description,
-    // image: data.image,
+    image: data.image,
     website: data.website,
   };
 

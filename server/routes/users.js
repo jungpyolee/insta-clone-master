@@ -72,17 +72,17 @@ router.get("/logout", auth, (req, res) => {
 });
 
 router.post("/setting", auth, (req, res) => {
-  User.updateOne(
+  User.findOneAndUpdate(
     console.log(req.body, req.user._id),
     { _id: req.user._id },
     {
-      $set: { nickname: req.body.nickname },
-      $set: { description: req.body.description },
       $set: {
+        name: req.body.username,
+        nickname: req.body.nickname,
+        description: req.body.description,
+        image: req.body.image,
         website: req.body.website,
       },
-      // $set: { image: req.body.image },
-      $set: { name: req.body.username },
     },
 
     (err, doc) => {

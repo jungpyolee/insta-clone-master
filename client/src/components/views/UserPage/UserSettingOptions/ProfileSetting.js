@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Form, Button, Avatar, Input } from "antd";
 import { useSelector, useDispatch } from "react-redux";
 import { settingUser } from "../../../../_actions/user_actions";
+import ProfileUpload from "./ProfileUpload";
 function ProfileSetting() {
   const user = useSelector((state) => state.user);
 
@@ -32,7 +33,7 @@ function ProfileSetting() {
   const [newDescription, setNewDescription] = useState(description);
   const [newNickname, setNewNickname] = useState(nickname);
   const [newWebsite, setNewWebsite] = useState(website);
-  const [newAvatar, setNewAvatar] = useState(avatar);
+  const [newAvatar, setNewAvatar] = useState(null);
   const [newUsername, setNewUsername] = useState(username);
   const handleChangeUsername = (event) => {
     setNewUsername(event.currentTarget.value);
@@ -51,19 +52,35 @@ function ProfileSetting() {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    let body = {
-      username: newUsername,
-      nickname: newNickname,
-      website: newWebsite,
-      description: newDescription,
-      image: newAvatar,
-    };
+    if (newAvatar) {
+      let body = {
+        username: newUsername,
+        nickname: newNickname,
+        website: newWebsite,
+        description: newDescription,
+        image: `http://localhost:5000/${newAvatar}`,
+      };
 
-    dispatch(settingUser(body)).then((response) => {
-      if (response.payload.success) {
-        console.log("성공적으로 설정했습니다.", response.payload);
-      }
-    });
+      dispatch(settingUser(body)).then((response) => {
+        if (response.payload.success) {
+          console.log("성공적으로 설정했습니다.", response.payload);
+        }
+      });
+    } else {
+      let body = {
+        username: newUsername,
+        nickname: newNickname,
+        website: newWebsite,
+        description: newDescription,
+        image: avatar,
+      };
+
+      dispatch(settingUser(body)).then((response) => {
+        if (response.payload.success) {
+          console.log("성공적으로 설정했습니다.", response.payload);
+        }
+      });
+    }
   };
 
   useEffect(() => {
@@ -77,8 +94,13 @@ function ProfileSetting() {
       setNewNickname(user.userData.nickname);
       setNewDescription(user.userData.description);
       setNewUsername(user.userData.name);
+      // setNewAvatar(user.userData.image);
     }
   }, [user]);
+
+  const avatarHandler = (image) => {
+    setNewAvatar(image);
+  };
   return (
     <div
       className="profileform"
@@ -94,11 +116,16 @@ function ProfileSetting() {
         {/* 프편 상단 */}
         <div style={{ marginLeft: "90px" }}>
           <div style={{ display: "flex" }}>
-            <Avatar src={avatar} size={40}></Avatar>
+            {
+              <Avatar
+                src={newAvatar ? `http://localhost:5000/${newAvatar}` : avatar}
+                size={40}
+              ></Avatar>
+            }
             <div style={{ marginLeft: "30px" }}>
               <div>{/* <b>{username}</b> */}</div>
               <div>
-                <input type="file"></input>
+                <ProfileUpload refreshFunction={avatarHandler} />
               </div>
             </div>
           </div>

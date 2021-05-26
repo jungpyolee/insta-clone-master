@@ -29,10 +29,13 @@ function NavBar(props) {
         <nav
           className="menu"
           style={{
-            position: "relative",
-            zIndex: 5,
+            position: "fixed",
+
             width: "975px",
             top: 0,
+            right: 0,
+            left: 0,
+
             height: "54px",
             margin: "0 auto",
             borderBottom: "1px solid #dbdbdb",

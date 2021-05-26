@@ -38,6 +38,7 @@ function App() {
           width: "975px",
           margin: "0 auto",
           minHeight: "calc(100vh - 80px)",
+          marginTop: 50,
         }}
       >
         <Switch>

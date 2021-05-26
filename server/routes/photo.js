@@ -4,6 +4,8 @@ const multer = require("multer");
 
 const { Photo } = require("../models/Photo");
 
+const { auth } = require("../middleware/auth");
+
 var storage = multer.diskStorage({
   destination: (req, file, cb) => {
     cb(null, "uploads/");
@@ -41,6 +43,24 @@ router.post("/image", (req, res) => {
       fileName: res.req.file.filename,
     });
   });
+});
+
+router.get("/photos", auth, (req, res) => {
+  let limit = req.body.limit ? parseInt(req.body.limit) : 20;
+  let skip = req.body.skip ? parseInt(req.body.skip) : 0;
+
+  Photo.find({ writer: req.user._id })
+    .populate("writer")
+    .sort({ createdAt: -1 })
+    .skip(skip)
+    .limit(limit)
+    .exec((err, photoInfo) => {
+      console.log(photoInfo);
+      if (err) return res.status(400).json({ success: false, err });
+      return res
+        .status(200)
+        .json({ success: true, photoInfo, postSize: photoInfo.length });
+    });
 });
 
 module.exports = router;

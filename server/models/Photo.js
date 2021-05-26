@@ -7,6 +7,7 @@ const photoSchema = mongoose.Schema(
       type: Schema.Types.ObjectId,
       ref: "User",
     },
+
     description: {
       type: String,
     },
@@ -32,17 +33,14 @@ const photoSchema = mongoose.Schema(
       default: 0,
     },
 
-    hashTags: {
-      type: Array,
-      default: [],
-    },
+    likes: [{ type: Schema.Types.ObjectId, ref: "User" }],
+
+    comments: [
+      { text: String, writer: { type: Schema.Types.ObjectId, ref: "User" } },
+    ],
   },
   { timestamps: true }
 );
-
-photoSchema.index({
-  hashTags: "text",
-});
 
 const Photo = mongoose.model("Photo", photoSchema);
 

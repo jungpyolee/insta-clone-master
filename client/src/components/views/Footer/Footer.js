@@ -1,7 +1,7 @@
 import React from "react";
 // import { Icon } from "antd";
 
-function Footer() {
+function Footer(props) {
   return (
     <div
       style={{

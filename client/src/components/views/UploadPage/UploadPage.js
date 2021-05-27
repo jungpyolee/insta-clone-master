@@ -3,7 +3,6 @@ import axios from "axios";
 import { Typography, Button, Form, Input } from "antd";
 import FileUpload from "./FileUpload";
 import { Formik } from "formik";
-import * as Yup from "yup";
 
 const { Title } = Typography;
 const { TextArea } = Input;

@@ -3,11 +3,14 @@ import { Button, Col, Row, Card } from "antd";
 import { SettingFilled } from "@ant-design/icons";
 import Avatar from "antd/lib/avatar/avatar";
 import axios from "axios";
+import PostDetail from "./PostDetail";
+import { Link } from "react-router-dom";
 function UserPage(props) {
   const [Photos, setPhotos] = useState([]);
   const [Skip, setSkip] = useState(0);
   const [Limit, setLimit] = useState(9);
   const [PostSize, setPostSize] = useState(0);
+  const [postDetail, setPostDetail] = useState(false);
 
   useEffect(() => {
     let body = {
@@ -49,18 +52,18 @@ function UserPage(props) {
     if (photo) {
       return (
         <Col lg={8} key={index}>
-          <Card
-            style={{ width: 293, height: 293 }}
-            cover={
-              <a href={`/photo/${photo._id}`}>
+          <Link to={`/post/${photo._id}`}>
+            <Card
+              style={{ cursor: "pointer", width: 293, height: 293 }}
+              cover={
                 <img
                   style={{ width: 293, height: 293, objectFit: "cover" }}
-                  src={`http://localhost:5000/${photo.images}`}
+                  src={`http://localhost:5000/${photo.images[0]}`}
                   alt="사진"
                 />
-              </a>
-            }
-          ></Card>
+              }
+            ></Card>
+          </Link>
         </Col>
       );
     } else {
@@ -124,6 +127,8 @@ function UserPage(props) {
           <button onClick={loadMoreHandler}>더보기</button>
         </div>
       )}
+
+      {postDetail && <PostDetail photo={Photos}></PostDetail>}
     </div>
   );
 }

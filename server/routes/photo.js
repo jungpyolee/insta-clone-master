@@ -45,6 +45,20 @@ router.post("/image", (req, res) => {
   });
 });
 
+router.post("/detail", (req, res) => {
+  Photo.find({ _id: req.body.postId })
+    .populate("writer")
+    .exec((err, photoInfo) => {
+      if (err) {
+        return req.json({ success: false, err });
+      }
+      return res.json({
+        success: true,
+        photoinfo: photoInfo,
+      });
+    });
+});
+
 router.get("/photos", auth, (req, res) => {
   let limit = req.query.limit ? parseInt(req.query.limit) : 20;
   let skip = req.query.skip ? parseInt(req.query.skip) : 0;

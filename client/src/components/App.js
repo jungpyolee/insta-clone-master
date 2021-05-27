@@ -22,6 +22,7 @@ import UserSetting from "./views/UserPage/UserSetting";
 import NavBar from "./views/NavBar/NavBar";
 // import { BlockOutlined } from "@ant-design/icons";
 import UploadPage from "./views/UploadPage/UploadPage";
+import PostDetail from "./views/UserPage/PostDetail";
 
 //null   Anyone Can go inside
 //true   only logged in user can go inside
@@ -45,7 +46,9 @@ function App() {
           <Route exact path="/loginpage" component={Auth(LoginPage, false)} />
           <Route exact path="/register" component={Auth(RegisterPage, false)} />
           <Route exact path="/" component={Auth(LandingPage, true)} />
-          <Route exact path="/user/:id" component={Auth(UserPage, null)} />
+          <Route exact path="/user/:id" component={Auth(UserPage, true)} />
+          <Route exact path="/post/:id" component={Auth(PostDetail, null)} />
+
           <Route exact path="/setting" component={Auth(UserSetting, true)} />
           <Route exact path="/upload" component={Auth(UploadPage, true)} />
         </Switch>

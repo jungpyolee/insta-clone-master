@@ -19,7 +19,7 @@ function UserPage(props) {
   }, []);
 
   const getPhotos = (body) => {
-    axios.get("/api/photo/photos", body).then((response) => {
+    axios.get("/api/photo/photos", { params: body }).then((response) => {
       if (response.data.success) {
         if (body.loadMore) {
           setPhotos([...Photos, ...response.data.photoInfo]);
@@ -116,6 +116,9 @@ function UserPage(props) {
         {renderCards}
       </Row>
 
+      <br />
+      <br />
+      <br />
       {PostSize >= Limit && (
         <div style={{ display: "flex", justifyContent: "center" }}>
           <button onClick={loadMoreHandler}>더보기</button>

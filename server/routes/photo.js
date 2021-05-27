@@ -46,8 +46,8 @@ router.post("/image", (req, res) => {
 });
 
 router.get("/photos", auth, (req, res) => {
-  let limit = req.body.limit ? parseInt(req.body.limit) : 20;
-  let skip = req.body.skip ? parseInt(req.body.skip) : 0;
+  let limit = req.query.limit ? parseInt(req.query.limit) : 20;
+  let skip = req.query.skip ? parseInt(req.query.skip) : 0;
 
   Photo.find({ writer: req.user._id })
     .populate("writer")

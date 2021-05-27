@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import axios from "axios";
 import { Typography, Button, Form, Input } from "antd";
 import FileUpload from "./FileUpload";
+import { Formik } from "formik";
+import * as Yup from "yup";
 
 const { Title } = Typography;
 const { TextArea } = Input;
@@ -12,52 +14,33 @@ const Private = [
 ];
 
 function UploadPage(props) {
-  // const [images, setImages] = useState("");
-  const [description, setDescription] = useState("");
-  const [privacy, setPrivacy] = useState(0);
-  const [location, setLocation] = useState("");
-  const [hashTags, setHashTags] = useState([]);
   const [images, setImages] = useState([]);
-  const handleChangeLocation = (event) => {
-    setLocation(event.currentTarget.value);
-  };
-
-  const handleChangeHashTags = (event) => {
-    setHashTags(event.currentTarget.value);
-  };
-
-  const handleChangeDecsription = (event) => {
-    setDescription(event.currentTarget.value);
-  };
-
-  const handleChangeOne = (event) => {
-    setPrivacy(event.currentTarget.value);
-  };
 
   const uploadImages = (newImages) => {
     setImages(newImages);
   };
+  const onSubmit = (values) => {
+    if (images.length === 0) {
+      return alert("사진을 추가해주세요!");
+    } else {
+      const variables = {
+        writer: props.user.userData._id,
+        description: values.description,
+        privacy: values.privacy,
+        images: images,
+        location: values.location,
+        hashTags: values.hashTags,
+      };
 
-  const onSubmit = (e) => {
-    e.preventDefault();
-
-    const variables = {
-      writer: props.user.userData._id,
-      description: description,
-      privacy: privacy,
-      images: images,
-      location: location,
-      hashTags: hashTags,
-    };
-
-    axios.post("/api/photo/", variables).then((response) => {
-      if (response.data.success) {
-        alert("Photo Uploaded Successfully");
-        props.history.push("/userpage");
-      } else {
-        alert("Failed to upload Photo");
-      }
-    });
+      axios.post("/api/photo/", variables).then((response) => {
+        if (response.data.success) {
+          alert("포스트 작성 완료!");
+          props.history.push(`/user/:${props.user.userData._id}`);
+        } else {
+          alert("Failed to upload Photo");
+        }
+      });
+    }
   };
 
   return (
@@ -68,56 +51,79 @@ function UploadPage(props) {
       }}
     >
       <Title level={2}> Upload Photo</Title>
+      <Formik
+        initialValues={{
+          description: "",
+          privacy: 0,
+          location: "",
+          hashtags: [],
+        }}
+        onSubmit={onSubmit}
+      >
+        {(props) => {
+          const { values, handleChange, handleSubmit } = props;
+          return (
+            <Form onSubmit={handleSubmit}>
+              <FileUpload refreshFunction={uploadImages}></FileUpload>
 
-      <div style={{ textAlign: "center", marginBottom: "2rem" }}></div>
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "space-between",
+                }}
+              >
+                <br />
+                <br />
+                <br />
+                <br />
+                <Form.Item label="사진 설명">
+                  <TextArea
+                    id="description"
+                    onChange={handleChange}
+                    value={values.description}
+                    placeholder="사진을 설명해주세요"
+                  />
+                </Form.Item>
 
-      <Form onSubmit={onSubmit}>
-        <FileUpload refreshFunction={uploadImages}></FileUpload>
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "space-between",
-          }}
-        >
-          <br />
-          <br />
-
-          <br />
-          <br />
-          <label>사진 설명</label>
-          <TextArea
-            onChange={handleChangeDecsription}
-            value={description}
-            placeholder="문구 입력..."
-          />
-          <br />
-          <br />
-          <label>공개 여부</label>
-          <select style={{ width: 200 }} onChange={handleChangeOne}>
-            {Private.map((item, index) => (
-              <option key={index} value={item.value}>
-                {item.label}
-              </option>
-            ))}
-          </select>
-          <br />
-          <br />
-
-          <label>위치 추가</label>
-          <Input onChange={handleChangeLocation} value={location} />
-
-          <br />
-
-          <label>해시태그 추가</label>
-          <Input onChange={handleChangeHashTags} value={hashTags} />
-          <br />
-          <br />
-          <Button type="primary" size="large" onClick={onSubmit}>
-            Submit
-          </Button>
-        </div>
-      </Form>
+                <Form.Item label="공개 여부">
+                  <select
+                    id="privacy"
+                    value={values.privacy}
+                    style={{ width: 200 }}
+                    onChange={handleChange}
+                  >
+                    {Private.map((item, index) => (
+                      <option key={index} value={item.value}>
+                        {item.label}
+                      </option>
+                    ))}
+                  </select>
+                </Form.Item>
+                <Form.Item label="위치 추가">
+                  <Input
+                    id="location"
+                    value={values.location}
+                    onChange={handleChange}
+                  ></Input>
+                </Form.Item>
+                <Form.Item label="해시태그 추가">
+                  <Input
+                    id="hashtags"
+                    value={values.hashtags}
+                    onChange={handleChange}
+                  ></Input>
+                </Form.Item>
+                <Form.Item>
+                  <Button type="primary" size="large" onClick={handleSubmit}>
+                    Submit
+                  </Button>
+                </Form.Item>
+              </div>
+            </Form>
+          );
+        }}
+      </Formik>
     </div>
   );
 }

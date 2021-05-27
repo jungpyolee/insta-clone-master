@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 
 import axios from "axios";
 import { USER_SERVER } from "../../../Config";
-import { withRouter } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -12,7 +12,11 @@ import {
   faBookmark,
 } from "@fortawesome/free-regular-svg-icons";
 
-import { faCog, faExchangeAlt } from "@fortawesome/free-solid-svg-icons";
+import {
+  faCog,
+  faExchangeAlt,
+  faUpload,
+} from "@fortawesome/free-solid-svg-icons";
 import { Menu } from "antd";
 import Avatar from "antd/lib/avatar/avatar";
 
@@ -39,20 +43,6 @@ function RightMenu(props) {
     });
   };
 
-  const onProfile = (e) => {
-    e.preventDefault();
-    props.history.push("/userpage");
-  };
-
-  const onHome = (e) => {
-    e.preventDefault();
-    props.history.push("/");
-  };
-
-  const onSetting = (e) => {
-    e.preventDefault();
-    props.history.push("/setting");
-  };
   return (
     <div style={{ position: "relative", width: "220px" }}>
       <div
@@ -61,14 +51,15 @@ function RightMenu(props) {
           display: "flex",
         }}
       >
-        <a onClick={onHome}>
+        <Link to="/">
           <FontAwesomeIcon
             style={{ marginLeft: "23px", marginRight: "10px" }}
             icon="home"
             size="2x"
             color="black"
           />
-        </a>
+        </Link>
+
         <a href="/direct/inbox">
           <FontAwesomeIcon
             style={{ marginRight: "10px" }}
@@ -77,14 +68,14 @@ function RightMenu(props) {
             color="black"
           />
         </a>
-        <a href="/upload">
+        <Link to="/upload">
           <FontAwesomeIcon
             style={{ marginRight: "10px" }}
-            icon="compass"
+            icon={faUpload}
             size="2x"
             color="black"
           />
-        </a>
+        </Link>
         <FontAwesomeIcon
           style={{ marginRight: "10px" }}
           icon="heart"
@@ -126,13 +117,13 @@ function RightMenu(props) {
             }}
           >
             <Menu.Item key="1" onClick={onToggle}>
-              <a onClick={onProfile}>
+              <Link to={`/user/:${user.userData._id}`}>
                 <FontAwesomeIcon
                   style={{ marginRight: "5px" }}
                   icon={faUserCircle}
                 />
                 프로필
-              </a>
+              </Link>
             </Menu.Item>
 
             <Menu.Item key="2">
@@ -145,10 +136,10 @@ function RightMenu(props) {
               </a>
             </Menu.Item>
             <Menu.Item key="3" onClick={onToggle}>
-              <a onClick={onSetting}>
+              <Link to="/setting">
                 <FontAwesomeIcon style={{ marginRight: "5px" }} icon={faCog} />
                 설정{" "}
-              </a>
+              </Link>
             </Menu.Item>
 
             <Menu.Item key="4" style={{ borderBottom: "1px solid black" }}>

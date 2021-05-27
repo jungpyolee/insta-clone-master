@@ -45,7 +45,7 @@ function App() {
           <Route exact path="/loginpage" component={Auth(LoginPage, false)} />
           <Route exact path="/register" component={Auth(RegisterPage, false)} />
           <Route exact path="/" component={Auth(LandingPage, true)} />
-          <Route exact path="/userpage" component={Auth(UserPage, null)} />
+          <Route exact path="/user/:id" component={Auth(UserPage, null)} />
           <Route exact path="/setting" component={Auth(UserSetting, true)} />
           <Route exact path="/upload" component={Auth(UploadPage, true)} />
         </Switch>

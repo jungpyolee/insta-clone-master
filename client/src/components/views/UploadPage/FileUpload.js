@@ -17,7 +17,6 @@ function FileUpload(props) {
       if (response.data.success) {
         console.log(response.data);
         setImages([...images, response.data.filePath]);
-
         props.refreshFunction([...images, response.data.filePath]);
       } else {
         alert(" 사진 저장실패");

@@ -73,7 +73,6 @@ router.get("/logout", auth, (req, res) => {
 
 router.post("/setting", auth, (req, res) => {
   User.findOneAndUpdate(
-    console.log(req.body, req.user._id),
     { _id: req.user._id },
     {
       $set: {

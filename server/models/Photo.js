@@ -32,12 +32,6 @@ const photoSchema = mongoose.Schema(
       type: Number,
       default: 0,
     },
-
-    likes: [{ type: Schema.Types.ObjectId, ref: "User" }],
-
-    comments: [
-      { text: String, writer: { type: Schema.Types.ObjectId, ref: "User" } },
-    ],
   },
   { timestamps: true }
 );

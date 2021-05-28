@@ -127,8 +127,6 @@ function UserPage(props) {
           <button onClick={loadMoreHandler}>더보기</button>
         </div>
       )}
-
-      {postDetail && <PostDetail photo={Photos}></PostDetail>}
     </div>
   );
 }

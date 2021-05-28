@@ -1,12 +1,16 @@
 import axios from "axios";
+import timeBefore from "../../../../src/_utils/timeBefore";
 
 import React, { useEffect, useState } from "react";
-import { Carousel } from "antd";
+import { Button, Carousel } from "antd";
 import Avatar from "antd/lib/avatar/avatar";
 import { Link } from "react-router-dom";
+import { CloseOutlined, LeftOutlined, RightOutlined } from "@ant-design/icons";
+import Comment from "./Comment";
 function PostDetail(props) {
   const postId = props.match.params.id;
   const [post, setPost] = useState(null);
+  const [comments, setComments] = useState([]);
   console.log(post);
   useEffect(() => {
     let body = {
@@ -21,9 +25,22 @@ function PostDetail(props) {
         alert("사진가져오기 실패");
       }
     });
+
+    axios.post("/api/comment/getComments", body).then((response) => {
+      if (response.data.success) {
+        setComments(response.data.comments);
+      } else {
+        alert("코멘트 가져오기실패");
+      }
+    });
   }, []);
+
+  const refreshFunction = (newComment) => {
+    setComments(comments.concat(newComment));
+  };
   return (
     <div
+      id="detail"
       style={{
         backgroundColor: "rgba(0,0,0,0.3)",
         position: "fixed",
@@ -32,8 +49,10 @@ function PostDetail(props) {
         right: 0,
         bottom: 0,
       }}
+      onClick={(e) => e.target.id === "detail" && props.history.goBack()}
     >
       <div
+        className="detail"
         style={{
           width: 975,
           height: 600,
@@ -43,7 +62,12 @@ function PostDetail(props) {
           display: "flex",
         }}
       >
-        <div style={{ width: 600 }}>
+        <div
+          style={{
+            width: 600,
+            backgroundColor: "black",
+          }}
+        >
           {post && (
             <Carousel autoplay>
               {post.images.map((image, index) => (
@@ -64,7 +88,6 @@ function PostDetail(props) {
             width: 375,
             height: 600,
             background: "white",
-            display: "flex",
           }}
         >
           {post && (
@@ -90,8 +113,8 @@ function PostDetail(props) {
               <div
                 style={{
                   marginLeft: 7,
-                  fontSize: "1.2rem",
-
+                  fontSize: "1rem",
+                  lineHeight: 1.2,
                   width: 300,
                   display: "flex",
                   alignItems: "center",
@@ -102,13 +125,81 @@ function PostDetail(props) {
                   to={`/user/${post.writer._id}`}
                 >
                   {post.writer.nickname}
+                  <br />
+                  <div style={{ fontSize: "0.8rem" }}>장소:{post.location}</div>
                 </Link>
               </div>
             </div>
           )}
+
+          {post && (
+            <div
+              style={{
+                padding: 16,
+                display: "flex",
+              }}
+            >
+              <div
+                style={{
+                  width: 42,
+                  height: 42,
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                <Avatar src={post.writer.image} size="16"></Avatar>
+              </div>
+              <div
+                style={{
+                  marginLeft: 7,
+                  fontSize: "1rem",
+                  lineHeight: 1.3,
+                  width: 300,
+                  display: "block",
+                  alignItems: "center",
+                }}
+              >
+                <Link
+                  style={{ color: "black", marginRight: 5 }}
+                  to={`/user/${post.writer._id}`}
+                >
+                  {post.writer.nickname}
+                </Link>
+
+                <div style={{ marginTop: 3, marginBottom: 8 }}>
+                  {post.description}
+                </div>
+
+                <div style={{ fontSize: "0.8rem" }}>
+                  {" "}
+                  {timeBefore(post.createdAt)}
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* 댓글부분 */}
+          <Comment
+            refreshFunction={refreshFunction}
+            commentLists={comments}
+            postId={postId}
+          >
+            {" "}
+          </Comment>
         </div>
 
-        {/* 댓글부분 */}
+        <CloseOutlined
+          style={{
+            color: "white",
+            position: "fixed",
+            right: 30,
+            top: 30,
+            cursor: "pointer",
+            fontSize: 40,
+          }}
+          onClick={() => props.history.goBack()}
+        />
       </div>
     </div>
   );

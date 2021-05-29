@@ -43,7 +43,7 @@ function ReplyComment(props) {
       {childCommentNumber > 0 && (
         <p
           style={{
-            fontSizee: "14px",
+            fontSize: "14px",
             margin: 0,
             color: "gray",
             cursor: "pointer",

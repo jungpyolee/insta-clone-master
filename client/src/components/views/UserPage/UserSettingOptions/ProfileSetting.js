@@ -123,13 +123,13 @@ function ProfileSetting() {
               ></Avatar>
             }
             <div style={{ marginLeft: "30px" }}>
-              <div>{/* <b>{username}</b> */}</div>
               <div>
                 <ProfileUpload refreshFunction={avatarHandler} />
               </div>
             </div>
           </div>
         </div>
+        <br />
         <Form.Item
           style={{ marginBottom: 10 }}
           name={["user", "name"]}
@@ -180,9 +180,8 @@ function ProfileSetting() {
             marginBottom: 20,
           }}
         >
-          대부분의 경우 14일 이내에 사용자 이름을 다시 (user.nickname)(으)로
-          변경할 수 있습니다.
-          <a style={{ color: "skyblue" }}>더 알아보기</a>
+          대부분의 경우 14일 이내에 사용자 이름을 다시 {nickname}(으)로 변경할
+          수 있습니다.
         </p>
         <Form.Item name={["user", "website"]} label={<b>웹사이트</b>}>
           <Input

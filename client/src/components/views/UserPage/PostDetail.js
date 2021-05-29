@@ -1,16 +1,17 @@
 import axios from "axios";
 import timeBefore from "../../../../src/_utils/timeBefore";
-
 import React, { useEffect, useState } from "react";
 import { Button, Carousel } from "antd";
 import Avatar from "antd/lib/avatar/avatar";
 import { Link } from "react-router-dom";
 import { CloseOutlined, LeftOutlined, RightOutlined } from "@ant-design/icons";
 import Comment from "./Comment";
+import PhotoSwiper from "../../../_utils/PhotoSwiper";
 function PostDetail(props) {
   const postId = props.match.params.id;
   const [post, setPost] = useState(null);
   const [comments, setComments] = useState([]);
+
   console.log(post);
   useEffect(() => {
     let body = {
@@ -64,23 +65,13 @@ function PostDetail(props) {
       >
         <div
           style={{
+            display: "flex",
+            padding: "auto 0",
             width: 600,
             backgroundColor: "black",
           }}
         >
-          {post && (
-            <Carousel autoplay>
-              {post.images.map((image, index) => (
-                <div key={index}>
-                  <img
-                    src={`http://localhost:5000/${image}`}
-                    alt="상세사진"
-                    style={{ width: 600, maxHeight: "600px" }}
-                  ></img>
-                </div>
-              ))}
-            </Carousel>
-          )}
+          {post && <PhotoSwiper post={post} />}
         </div>
         {/* 위쪽 */}
         <div
@@ -180,13 +171,16 @@ function PostDetail(props) {
           )}
 
           {/* 댓글부분 */}
-          <Comment
-            refreshFunction={refreshFunction}
-            commentLists={comments}
-            postId={postId}
-          >
-            {" "}
-          </Comment>
+          {post && (
+            <Comment
+              refreshFunction={refreshFunction}
+              commentLists={comments}
+              postId={postId}
+              post={post}
+            >
+              {" "}
+            </Comment>
+          )}
         </div>
 
         <CloseOutlined

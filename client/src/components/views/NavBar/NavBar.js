@@ -4,6 +4,7 @@ import RightMenu from "./Sections/RightMenu";
 import { Drawer, Button } from "antd";
 import "./Sections/Navbar.css";
 // import { Redirect } from "react-router";
+import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useSelector } from "react-redux";
 import { withRouter } from "react-router-dom";
@@ -26,57 +27,67 @@ function NavBar(props) {
   return (
     <div style={{ position: "relative" }}>
       {user?.userData?.isAuth ? (
-        <nav
-          className="menu"
+        <div
           style={{
             position: "fixed",
-
-            width: "975px",
+            width: "100%",
             top: 0,
             right: 0,
             left: 0,
-
-            height: "54px",
-            margin: "0 auto",
+            height: 54,
             borderBottom: "1px solid #dbdbdb",
           }}
         >
-          <div className="menu__logo">
-            <a onClick={onHome}>
-              <FontAwesomeIcon
-                icon={["fab", "instagram"]}
-                size="2x"
-                color="black"
-              />
-            </a>
-          </div>
-          <div className="menu__container">
-            <div className="menu_left">
-              <LeftMenu mode="horizontal" />
+          <nav
+            className="menu"
+            style={{
+              position: "fixed",
+              width: "975px",
+              top: 0,
+              right: 0,
+              left: 0,
+              height: "54px",
+              margin: "0 auto",
+              borderBottom: "1px solid #dbdbdb",
+            }}
+          >
+            <div className="menu__logo">
+              <Link to="/">
+                <FontAwesomeIcon
+                  icon={["fab", "instagram"]}
+                  size="2x"
+                  color="black"
+                />
+              </Link>
             </div>
-            <div className="menu_rigth">
-              <RightMenu mode="horizontal" />
+            <div className="menu__container">
+              <div className="menu_left">
+                <LeftMenu mode="horizontal" />
+              </div>
+              <div className="menu_rigth">
+                <RightMenu mode="horizontal" />
+              </div>
+              <Button
+                className="menu__mobile-button"
+                type="primary"
+                onClick={showDrawer}
+              >
+                {/* <Icon type="align-right" /> */}
+              </Button>
+              <Drawer
+                title="Basic Drawer"
+                placement="right"
+                className="menu_drawer"
+                closable={false}
+                onClose={onClose}
+                visible={visible}
+              >
+                <LeftMenu mode="inline" />
+                <RightMenu mode="inline" />
+              </Drawer>
             </div>
-            <Button
-              className="menu__mobile-button"
-              type="primary"
-              onClick={showDrawer}
-            >
-              {/* <Icon type="align-right" /> */}
-            </Button>
-            <Drawer
-              title="Basic Drawer"
-              placement="right"
-              className="menu_drawer"
-              closable={false}
-              onClose={onClose}
-              visible={visible}
-            >
-              <LeftMenu mode="inline" />
-              <RightMenu mode="inline" />
-            </Drawer>
-          </div>
-        </nav>
+          </nav>
+        </div>
       ) : null}
     </div>
   );

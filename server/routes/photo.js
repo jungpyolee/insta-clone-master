@@ -77,4 +77,13 @@ router.get("/photos", auth, (req, res) => {
     });
 });
 
+router.get("/postLength", auth, (req, res) => {
+  Photo.find({ writer: req.user._id }).exec((err, postLength) => {
+    if (err) return res.status(400).json({ success: false, err });
+    return res
+      .status(200)
+      .json({ success: true, postLength: postLength.length });
+  });
+});
+
 module.exports = router;

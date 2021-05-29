@@ -2,6 +2,9 @@ import React, { useState } from "react";
 import { Form, Comment, Avatar, Button, Input } from "antd";
 import axios from "axios";
 import { useSelector } from "react-redux";
+import timeBefore from "../../../../src/_utils/timeBefore";
+import { HeartFilled, HeartOutlined } from "@ant-design/icons";
+import Like from "../../../_utils/Like";
 function SingleComment(props) {
   const { TextArea } = Input;
   const postId = props.postId;
@@ -9,15 +12,27 @@ function SingleComment(props) {
 
   const [openReply, setOpenReply] = useState(false);
   const [commentValue, setCommentValue] = useState("");
+
   const actions = [
-    <span
-      onClick={() => {
-        setOpenReply(!openReply);
+    <div
+      style={{
+        display: "flex",
+        fontSize: 10,
+        lineHeight: 0.5,
+        fontWeight: "bold",
       }}
-      key="comment-basic-reply-to"
     >
-      Reply to
-    </span>,
+      <p>{timeBefore(props.comment.createdAt)}</p> &nbsp;&nbsp;
+      <p
+        style={{ cursor: "pointer" }}
+        onClick={() => {
+          setOpenReply(!openReply);
+        }}
+        key="comment-basic-reply-to"
+      >
+        답글 달기
+      </p>
+    </div>,
   ];
   const onSubmit = (e) => {
     e.preventDefault();
@@ -45,12 +60,28 @@ function SingleComment(props) {
   };
   return (
     <div>
-      <Comment
-        actions={actions}
-        author={props.comment.writer.nickname}
-        avatar={<Avatar src={props.comment.writer.image} alt="image" />}
-        content={<p>{props.comment.content}</p>}
-      />
+      <div style={{ display: "flex" }}>
+        <Comment
+          style={{ width: "80%", marginLeft: 3 }}
+          actions={actions}
+          author={props.comment.writer.nickname}
+          avatar={<Avatar src={props.comment.writer.image} alt="image" />}
+          content={<p>{props.comment.content}</p>}
+        />
+
+        <div
+          style={{
+            width: "20%",
+            cursor: "pointer",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            fontSize: 16,
+          }}
+        >
+          <Like commentId={props.comment._id} />
+        </div>
+      </div>
       {openReply && (
         <Form style={{ display: "flex" }} onSubmit={onSubmit}>
           <TextArea

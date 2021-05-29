@@ -3,15 +3,14 @@ import { Button, Col, Row, Card } from "antd";
 import { SettingFilled } from "@ant-design/icons";
 import Avatar from "antd/lib/avatar/avatar";
 import axios from "axios";
-import PostDetail from "./PostDetail";
 import { Link } from "react-router-dom";
+
 function UserPage(props) {
   const [Photos, setPhotos] = useState([]);
   const [Skip, setSkip] = useState(0);
   const [Limit, setLimit] = useState(9);
   const [PostSize, setPostSize] = useState(0);
-  const [postDetail, setPostDetail] = useState(false);
-
+  const [postLength, setPostLength] = useState(0);
   useEffect(() => {
     let body = {
       skip: Skip,
@@ -19,6 +18,7 @@ function UserPage(props) {
     };
 
     getPhotos(body);
+    getPostLength();
   }, []);
 
   const getPhotos = (body) => {
@@ -37,6 +37,15 @@ function UserPage(props) {
     });
   };
 
+  const getPostLength = () => {
+    axios.get("/api/photo/postLength").then((response) => {
+      if (response.data.success) {
+        setPostLength(response.data.postLength);
+      } else {
+        alert("게시물수 조회 실패");
+      }
+    });
+  };
   const loadMoreHandler = () => {
     let skip = Skip + Limit;
     let body = {
@@ -49,26 +58,22 @@ function UserPage(props) {
   };
 
   const renderCards = Photos.map((photo, index) => {
-    if (photo) {
-      return (
-        <Col lg={8} key={index}>
-          <Link to={`/post/${photo._id}`}>
-            <Card
-              style={{ cursor: "pointer", width: 293, height: 293 }}
-              cover={
-                <img
-                  style={{ width: 293, height: 293, objectFit: "cover" }}
-                  src={`http://localhost:5000/${photo.images[0]}`}
-                  alt="사진"
-                />
-              }
-            ></Card>
-          </Link>
-        </Col>
-      );
-    } else {
-      return null;
-    }
+    return (
+      <Col lg={8} key={index}>
+        <Link to={`/post/${photo._id}`}>
+          <Card
+            style={{ cursor: "pointer", width: 293, height: 293 }}
+            cover={
+              <img
+                style={{ width: 293, height: 293, objectFit: "cover" }}
+                src={`http://localhost:5000/${photo.images[0]}`}
+                alt="사진"
+              />
+            }
+          ></Card>
+        </Link>
+      </Col>
+    );
   });
   return (
     <div style={{ width: "975px", margin: "0 auto" }}>
@@ -84,20 +89,22 @@ function UserPage(props) {
           }}
         >
           {props.user && (
-            <Avatar src={props.user.userData.image} size={130}></Avatar>
+            <Avatar src={props.user.userData?.image} size={130}></Avatar>
           )}
         </div>
         <div style={{ width: "66%" }}>
           <div style={{ fontSize: "1.5rem", fontWeight: "bold" }}>
-            {props.user.userData.nickname} <Button>프로필 편집</Button>{" "}
+            {props.user.userData?.nickname} <Button>프로필 편집</Button>{" "}
             <SettingFilled />
           </div>
           {/* 유저 이름 , 프로필 편집, 설정아이콘 */}
           {/* 게시물, 게시물수/ 팔로워, 팔로워 수 / 팔로우, 팔로우 수  */}
-          <div>게시물 100 &nbsp;&nbsp;팔로워 100 &nbsp;&nbsp;팔로우 100</div>
+          <div>
+            게시물 {postLength} &nbsp;&nbsp;팔로워 100 &nbsp;&nbsp;팔로우 100
+          </div>
           <br />
-          <div>{props.user.userData.description}</div>{" "}
-          <div>{props.user.userData.website}</div>
+          <div>{props.user.userData?.description}</div>{" "}
+          <div>{props.user.userData?.website}</div>
           {/* 유저 description */}
         </div>
       </div>

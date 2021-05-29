@@ -31,7 +31,8 @@ function ProfileUpload(props) {
         {({ getRootProps, getInputProps }) => (
           <div
             style={{
-              width: 30,
+              marginTop: 7,
+              width: 80,
               height: 20,
               border: "1px solid lightgray",
               display: "flex",

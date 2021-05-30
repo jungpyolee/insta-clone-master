@@ -10,6 +10,10 @@ function Like(props) {
   const postId = props.postId;
   const commentId = props.commentId;
 
+  const onRefresh = (likes) => {
+    props.refreshFunction(likes);
+  };
+
   let variable = {};
 
   if (postId) {
@@ -23,6 +27,7 @@ function Like(props) {
       if (response.data.success) {
         //   좋아요수
         setLikes(response.data.likes.length);
+
         console.log(response.data.likes);
         response.data.likes.forEach((like) => {
           if (like.userId === user.userData?._id) {
@@ -35,7 +40,6 @@ function Like(props) {
     });
   }, []);
   const onLiked = () => {
-    console.log(variable);
     if (liked === false) {
       axios.post("/api/like/uplike", variable).then((response) => {
         if (response.data.success) {
@@ -49,6 +53,7 @@ function Like(props) {
       axios.post("/api/like/unlike", variable).then((response) => {
         if (response.data.success) {
           setLikes(likes - 1);
+
           setLiked(false);
         } else {
           alert("좋아요취소실패");
@@ -56,15 +61,25 @@ function Like(props) {
       });
     }
   };
+
   return (
     <div>
       {liked ? (
         <HeartFilled
           style={{ color: "red", cursor: "pointer" }}
-          onClick={onLiked}
+          onClick={() => {
+            onLiked();
+            onRefresh(likes);
+          }}
         />
       ) : (
-        <HeartOutlined style={{ cursor: "pointer" }} onClick={onLiked} />
+        <HeartOutlined
+          style={{ cursor: "pointer" }}
+          onClick={() => {
+            onLiked();
+            onRefresh(likes);
+          }}
+        />
       )}
       <div>{likes}</div>
     </div>

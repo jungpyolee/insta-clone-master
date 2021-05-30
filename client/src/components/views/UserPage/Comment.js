@@ -21,6 +21,10 @@ function Comment(props) {
   const [commentValue, setCommentValue] = useState("");
   const postDate = moment(props.post.createdAt).format("lll");
 
+  const refreshFunction = (newLikes) => {
+    console.log(newLikes);
+  };
+
   console.log(postDate);
   const handleClick = (e) => {
     setCommentValue(e.target.value);
@@ -96,7 +100,7 @@ function Comment(props) {
             }}
           >
             <div>
-              <Like postId={postId} />
+              <Like refreshFunction={refreshFunction} postId={postId} />
               <MessageOutlined
                 style={{ cursor: "pointer", marginLeft: 10, marginRight: 10 }}
               />

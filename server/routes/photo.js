@@ -59,11 +59,11 @@ router.post("/detail", (req, res) => {
     });
 });
 
-router.get("/photos", auth, (req, res) => {
+router.get("/photos", (req, res) => {
   let limit = req.query.limit ? parseInt(req.query.limit) : 20;
   let skip = req.query.skip ? parseInt(req.query.skip) : 0;
 
-  Photo.find({ writer: req.user._id })
+  Photo.find({ writer: req.query.id })
     .populate("writer")
     .sort({ createdAt: -1 })
     .skip(skip)
@@ -77,8 +77,8 @@ router.get("/photos", auth, (req, res) => {
     });
 });
 
-router.get("/postLength", auth, (req, res) => {
-  Photo.find({ writer: req.user._id }).exec((err, postLength) => {
+router.post("/postLength", (req, res) => {
+  Photo.find({ writer: req.body.id }).exec((err, postLength) => {
     if (err) return res.status(400).json({ success: false, err });
     return res
       .status(200)

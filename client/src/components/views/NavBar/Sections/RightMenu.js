@@ -117,7 +117,7 @@ function RightMenu(props) {
             }}
           >
             <Menu.Item key="1" onClick={onToggle}>
-              <Link to={`/user/:${user.userData._id}`}>
+              <Link to={`/user/${user.userData._id}`}>
                 <FontAwesomeIcon
                   style={{ marginRight: "5px" }}
                   icon={faUserCircle}

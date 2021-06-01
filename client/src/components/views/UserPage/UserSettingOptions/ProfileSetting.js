@@ -3,7 +3,8 @@ import { Form, Button, Avatar, Input } from "antd";
 import { useSelector, useDispatch } from "react-redux";
 import { settingUser } from "../../../../_actions/user_actions";
 import ProfileUpload from "./ProfileUpload";
-function ProfileSetting() {
+import { Link } from "react-router-dom";
+function ProfileSetting(props) {
   const user = useSelector((state) => state.user);
 
   const dispatch = useDispatch();
@@ -50,8 +51,7 @@ function ProfileSetting() {
     setNewWebsite(event.currentTarget.value);
   };
 
-  const onSubmit = (e) => {
-    e.preventDefault();
+  const onSubmit = () => {
     if (newAvatar) {
       let body = {
         username: newUsername,
@@ -123,6 +123,10 @@ function ProfileSetting() {
               ></Avatar>
             }
             <div style={{ marginLeft: "30px" }}>
+              <div style={{ fontWeight: "bold", fontSize: "1.2rem" }}>
+                {user?.userData?.nickname}
+              </div>
+
               <div>
                 <ProfileUpload refreshFunction={avatarHandler} />
               </div>
@@ -201,9 +205,13 @@ function ProfileSetting() {
         </Form.Item>
 
         <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 8 }}>
+          {/* <a href={`/user/${user.userData._Id}`}> */}
+
           <Button type="primary" htmlType="submit" onClick={onSubmit}>
-            Submit
+            <a href={`/user/${user.userData?._id}`}>Submit </a>
           </Button>
+
+          {/* </a> */}
         </Form.Item>
       </Form>
     </div>

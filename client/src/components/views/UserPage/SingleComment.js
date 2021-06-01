@@ -16,7 +16,6 @@ function SingleComment(props) {
   const [openLikes, setOpenLikes] = useState(false);
 
   const refreshFunction = (newLikes) => {
-    console.log(newLikes);
     setLikes(newLikes);
   };
 

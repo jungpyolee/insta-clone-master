@@ -23,6 +23,14 @@ router.get("/auth", auth, (req, res) => {
     website: req.user.website,
   });
 });
+
+router.post("/getUser", (req, res) => {
+  User.findOne({ _id: req.body.id }).exec((err, userInfo) => {
+    if (err) return res.status(400).json({ success: false, err });
+    return res.status(200).json({ success: true, userInfo: userInfo });
+  });
+});
+
 router.post("/register", (req, res) => {
   const user = new User(req.body);
 

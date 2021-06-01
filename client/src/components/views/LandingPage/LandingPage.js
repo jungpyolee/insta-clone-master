@@ -1,4 +1,5 @@
 import React from "react";
+import Follow from "../../../_utils/Follow/Follow";
 // import { useSelector } from "react-redux";
 
 // import Footer from "../Footer/Footer";
@@ -11,9 +12,11 @@ function LandingPage(props) {
   // const user = useSelector((state) => state.user);
 
   return (
-    <div style={{ display: "flex", paddingTop: 30 }}>
+    <div style={{ paddingTop: 30 }}>
       <LandingPagePost />
-      <SideBar />;
+      <SideBar />
+      <br />
+      <Follow />
     </div>
   );
 }

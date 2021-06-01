@@ -34,7 +34,7 @@ function UploadPage(props) {
       axios.post("/api/photo/", variables).then((response) => {
         if (response.data.success) {
           alert("포스트 작성 완료!");
-          props.history.push(`/user/:${props.user.userData._id}`);
+          props.history.push(`/user/${props.user.userData._id}`);
         } else {
           alert("Failed to upload Photo");
         }

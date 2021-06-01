@@ -7,6 +7,7 @@ function Like(props) {
   const user = useSelector((state) => state.user);
   const [liked, setLiked] = useState(false);
   const [likes, setLikes] = useState(0);
+  const [likeDetail, setLikeDetail] = useState([]);
   const postId = props.postId;
   const commentId = props.commentId;
 
@@ -27,10 +28,12 @@ function Like(props) {
       if (response.data.success) {
         //   좋아요수
         setLikes(response.data.likes.length);
+        setLikeDetail(response.data.likes);
+        onRefresh(response.data.likes.length);
 
         console.log(response.data.likes);
         response.data.likes.forEach((like) => {
-          if (like.userId === user.userData?._id) {
+          if (like.userId._id === user.userData?._id) {
             setLiked(true);
           }
         });
@@ -45,6 +48,8 @@ function Like(props) {
         if (response.data.success) {
           setLikes(likes + 1);
           setLiked(true);
+
+          onRefresh(likes + 1);
         } else {
           alert("좋아요실패");
         }
@@ -53,8 +58,9 @@ function Like(props) {
       axios.post("/api/like/unlike", variable).then((response) => {
         if (response.data.success) {
           setLikes(likes - 1);
-
           setLiked(false);
+
+          onRefresh(likes - 1);
         } else {
           alert("좋아요취소실패");
         }
@@ -67,21 +73,11 @@ function Like(props) {
       {liked ? (
         <HeartFilled
           style={{ color: "red", cursor: "pointer" }}
-          onClick={() => {
-            onLiked();
-            onRefresh(likes);
-          }}
+          onClick={onLiked}
         />
       ) : (
-        <HeartOutlined
-          style={{ cursor: "pointer" }}
-          onClick={() => {
-            onLiked();
-            onRefresh(likes);
-          }}
-        />
+        <HeartOutlined style={{ cursor: "pointer" }} onClick={onLiked} />
       )}
-      <div>{likes}</div>
     </div>
   );
 }

@@ -32,7 +32,7 @@ function ProfileUpload(props) {
           <div
             style={{
               marginTop: 7,
-              width: 80,
+              width: 120,
               height: 20,
               border: "1px solid lightgray",
               display: "flex",
@@ -42,7 +42,9 @@ function ProfileUpload(props) {
             {...getRootProps()}
           >
             <input {...getInputProps()} />
-            사진 변경
+            <div style={{ cursor: "pointer", color: "#7870e0" }}>
+              프로필사진 변경
+            </div>{" "}
             {/* <UploadOutlined style={{ fontSize: "2rem" }} /> */}
           </div>
         )}

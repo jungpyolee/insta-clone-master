@@ -8,7 +8,7 @@ import {
 import { Button } from "antd";
 import Form from "antd/lib/form/Form";
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import ReplyComment from "./ReplyComment";
 import SingleComment from "./SingleComment";
@@ -19,13 +19,15 @@ function Comment(props) {
   const postId = props.postId;
   const user = useSelector((state) => state.user);
   const [commentValue, setCommentValue] = useState("");
+  const [likes, setLikes] = useState(0);
+  const [likey, setLikey] = useState(0);
+  const [likeDetail, setLikeDetail] = useState([]);
   const postDate = moment(props.post.createdAt).format("lll");
-
-  const refreshFunction = (newLikes) => {
-    console.log(newLikes);
+  const refreshFunction = (newlikes) => {
+    setLikes(newlikes);
+    setLikey(newlikes - 1);
   };
 
-  console.log(postDate);
   const handleClick = (e) => {
     setCommentValue(e.target.value);
   };
@@ -49,6 +51,20 @@ function Comment(props) {
       }
     });
   };
+
+  useEffect(() => {
+    let variable = { postId: postId, userId: user.userData?._id };
+    axios.post("/api/like/getLikes", variable).then((response) => {
+      if (response.data.success) {
+        //   좋아요수
+
+        setLikeDetail(response.data.likes);
+      } else {
+        alert("좋아요정보가져오기실패");
+      }
+    });
+  }, []);
+
   return (
     <div style={{ borderTop: "1px solid black", height: 350 }}>
       {/* Comment Lists */}
@@ -99,20 +115,35 @@ function Comment(props) {
               padding: 5,
             }}
           >
-            <div>
+            <div style={{ display: "flex" }}>
               <Like refreshFunction={refreshFunction} postId={postId} />
-              <MessageOutlined
-                style={{ cursor: "pointer", marginLeft: 10, marginRight: 10 }}
-              />
-              <SendOutlined style={{ cursor: "pointer" }} />
-            </div>{" "}
+              <div>
+                <MessageOutlined
+                  style={{ cursor: "pointer", marginLeft: 10, marginRight: 10 }}
+                />
+              </div>
+              <div>
+                <SendOutlined style={{ cursor: "pointer" }} />
+              </div>
+            </div>
             <div>
-              {" "}
               <SaveOutlined style={{ marginRight: 5 }} />
             </div>
           </div>{" "}
           <div style={{ marginLeft: 8 }}>
-            <div>skynote_b님 외 10명이 좋아합니다.</div> <div>{postDate}</div>
+            {likes === 1 ? (
+              <div>
+                <b>{user?.userData?.nickname}</b>님이 좋아합니다.
+              </div>
+            ) : null}
+            {likes > 1 ? (
+              <div>
+                <b style={{ fontSize: "1.1rem" }}>
+                  {likeDetail[0]?.userId.nickname}
+                </b>
+                님 <b>외 {likey}&nbsp;명</b>이 좋아합니다.
+              </div>
+            ) : null}
           </div>
         </div>
       </div>

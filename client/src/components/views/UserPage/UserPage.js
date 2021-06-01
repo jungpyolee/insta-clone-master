@@ -4,22 +4,36 @@ import { SettingFilled } from "@ant-design/icons";
 import Avatar from "antd/lib/avatar/avatar";
 import axios from "axios";
 import { Link } from "react-router-dom";
-
+import Follow from "../../../_utils/Follow/Follow";
 function UserPage(props) {
   const [Photos, setPhotos] = useState([]);
   const [Skip, setSkip] = useState(0);
   const [Limit, setLimit] = useState(9);
   const [PostSize, setPostSize] = useState(0);
   const [postLength, setPostLength] = useState(0);
+  const [userInfo, setUserInfo] = useState("");
+  const userPageId = props.match.params.id;
   useEffect(() => {
     let body = {
       skip: Skip,
       limit: Limit,
+      id: userPageId,
     };
-
+    getUser(body);
     getPhotos(body);
-    getPostLength();
+
+    getPostLength(body);
   }, []);
+
+  const getUser = (body) => {
+    axios.post("/api/users/getUser", body).then((response) => {
+      if (response.data.success) {
+        setUserInfo(response.data.userInfo);
+      } else {
+        alert("유저정보가져오기실패");
+      }
+    });
+  };
 
   const getPhotos = (body) => {
     axios.get("/api/photo/photos", { params: body }).then((response) => {
@@ -37,10 +51,11 @@ function UserPage(props) {
     });
   };
 
-  const getPostLength = () => {
-    axios.get("/api/photo/postLength").then((response) => {
+  const getPostLength = (body) => {
+    axios.post("/api/photo/postLength", body).then((response) => {
       if (response.data.success) {
         setPostLength(response.data.postLength);
+        console.log(response.data);
       } else {
         alert("게시물수 조회 실패");
       }
@@ -52,6 +67,7 @@ function UserPage(props) {
       skip: skip,
       limit: Limit,
       loadMore: true,
+      id: userPageId,
     };
     getPhotos(body);
     setSkip(skip);
@@ -88,28 +104,37 @@ function UserPage(props) {
             alignItems: "flex-start",
           }}
         >
-          {props.user && (
-            <Avatar src={props.user.userData?.image} size={130}></Avatar>
-          )}
+          <Avatar src={userInfo.image} size={160}></Avatar>
         </div>
         <div style={{ width: "66%" }}>
-          <div style={{ fontSize: "1.5rem", fontWeight: "bold" }}>
-            {props.user.userData?.nickname} <Button>프로필 편집</Button>{" "}
-            <SettingFilled />
+          <div style={{ fontSize: "1.7rem", fontWeight: "bold" }}>
+            {userInfo.nickname}
+            {userPageId === props.user.userData?._id ? (
+              <Button>
+                <Link to="/setting">프로필 편집</Link>
+              </Button>
+            ) : (
+              <Follow />
+            )}
+            {/* <SettingFilled /> */}
           </div>
           {/* 유저 이름 , 프로필 편집, 설정아이콘 */}
           {/* 게시물, 게시물수/ 팔로워, 팔로워 수 / 팔로우, 팔로우 수  */}
+          <br />
           <div>
             게시물 {postLength} &nbsp;&nbsp;팔로워 100 &nbsp;&nbsp;팔로우 100
           </div>
           <br />
-          <div>{props.user.userData?.description}</div>{" "}
-          <div>{props.user.userData?.website}</div>
+          <div>
+            <b>{userInfo.name}</b>
+          </div>{" "}
+          <div style={{ width: 320 }}>{userInfo.description}</div>
           {/* 유저 description */}
         </div>
       </div>
 
       {/*  hr 인데 아래 클릭된거에 따라 bold된곳이 달라짐*/}
+      <br />
       <hr />
       {/* ic 게시물, ic IGTV, ic 저장됨, ic 태그됨 */}
       <div style={{ display: "flex", justifyContent: "center" }}>

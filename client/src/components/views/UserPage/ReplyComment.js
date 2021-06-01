@@ -9,6 +9,8 @@ function ReplyComment(props) {
 
     props.commentLists.map((comment) => {
       if (comment.responseTo === props.parentCommentId) {
+        setOpenReplyComments(true);
+
         return commentNumber++;
       }
     });

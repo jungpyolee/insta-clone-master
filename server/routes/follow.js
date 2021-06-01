@@ -1,13 +1,13 @@
 const express = require("express");
 const router = express.Router();
 
-const { Like } = require("../models/Like");
+const { Follow } = require("../models/Follow");
 
 //=================================
-//             Like
+//           Follow
 //=================================
 
-router.post("/getLikes", (req, res) => {
+router.post("/getFollow", (req, res) => {
   let variable = {};
 
   if (req.body.postId) {
@@ -42,20 +42,20 @@ router.post("/uplike", (req, res) => {
   });
 });
 
-router.post("/unlike", (req, res) => {
-  let variable = {};
+// router.post("/unlike", (req, res) => {
+//   let variable = {};
 
-  if (req.body.postId) {
-    variable = { postId: req.body.postId, userId: req.body.userId };
-  } else {
-    variable = { commentId: req.body.commentId, userId: req.body.userId };
-  }
+//   if (req.body.postId) {
+//     variable = { postId: req.body.postId, userId: req.body.userId };
+//   } else {
+//     variable = { commentId: req.body.commentId, userId: req.body.userId };
+//   }
 
-  // Like COllection에 클릭 정보 지우기
+//   // Like COllection에 클릭 정보 지우기
 
-  Like.findOneAndDelete(variable).exec((err, unlikeResult) => {
-    if (err) return res.status(400).json({ success: false, err });
-    return res.status(200).json({ success: true, unlikeResult });
-  });
-});
+//   Like.findOneAndDelete(variable).exec((err, unlikeResult) => {
+//     if (err) return res.status(400).json({ success: false, err });
+//     return res.status(200).json({ success: true, unlikeResult });
+//   });
+// });
 module.exports = router;

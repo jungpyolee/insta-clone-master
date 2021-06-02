@@ -11,8 +11,8 @@ function Like(props) {
   const postId = props.postId;
   const commentId = props.commentId;
 
-  const onRefresh = (likes) => {
-    props.refreshFunction(likes);
+  const onRefresh = (likes, likeDetail) => {
+    props.refreshFunction(likes, likeDetail);
   };
 
   let variable = {};
@@ -29,9 +29,8 @@ function Like(props) {
         //   좋아요수
         setLikes(response.data.likes.length);
         setLikeDetail(response.data.likes);
-        onRefresh(response.data.likes.length);
+        onRefresh(response.data.likes.length, response.data.likes);
 
-        console.log(response.data.likes);
         response.data.likes.forEach((like) => {
           if (like.userId._id === user.userData?._id) {
             setLiked(true);

@@ -6,6 +6,7 @@ import timeBefore from "../../../../src/_utils/timeBefore";
 
 import Like from "../../../_utils/Like";
 import { CloseOutlined } from "@ant-design/icons";
+import LikeDetail from "../../../_utils/LikeDetail";
 function SingleComment(props) {
   const { TextArea } = Input;
   const postId = props.postId;
@@ -15,9 +16,15 @@ function SingleComment(props) {
   const [commentValue, setCommentValue] = useState("");
   const [openLikes, setOpenLikes] = useState(false);
 
-  const refreshFunction = (newLikes) => {
+  const [likeDetail, setLikeDetail] = useState([]);
+  const refreshFunction = (newLikes, newLikeDetail) => {
     setLikes(newLikes);
+    setLikeDetail(newLikeDetail);
   };
+
+  // const refreshLikesInfo = (newLikesInfo) => {
+  //   setLikesInfo(newLikesInfo);
+  // };
 
   const actions = [
     <div
@@ -72,9 +79,14 @@ function SingleComment(props) {
     });
   };
 
+  const openHandler = () => {
+    setOpenLikes(!openLikes);
+  };
   const onHandleChange = (e) => {
     setCommentValue(e.target.value);
   };
+
+  console.log("singlecomment", likeDetail);
   return (
     <div>
       <div style={{ display: "flex" }}>
@@ -133,49 +145,10 @@ function SingleComment(props) {
             zIndex: 10,
           }}
           onClick={(e) => {
-            console.log(e.target);
             e.target.id === "openLikes" && setOpenLikes(!openLikes);
           }}
         >
-          <div
-            style={{
-              position: "fixed",
-              zIndex: 11,
-              top: 270,
-              left: 770,
-
-              width: 400,
-              height: 400,
-              backgroundColor: "white",
-              borderRadius: 12,
-            }}
-          >
-            <div
-              style={{
-                height: 42,
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                borderBottom: "1px solid black",
-                position: "relative",
-              }}
-            >
-              <div style={{ fontSize: "1.1rem", fontWeight: 600 }}>좋아요</div>
-              <div
-                style={{ fontSize: "1.4rem", position: "absolute", right: 20 }}
-              >
-                <CloseOutlined
-                  style={{ cursor: "pointer" }}
-                  onClick={() => {
-                    setOpenLikes(!openLikes);
-                  }}
-                />
-              </div>
-            </div>
-
-            {/* map */}
-            <div> 프사 아이디 소개</div>
-          </div>
+          <LikeDetail likeDetail={likeDetail} openHandler={openHandler} />
         </div>
       )}
     </div>

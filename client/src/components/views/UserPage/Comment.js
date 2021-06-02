@@ -52,6 +52,7 @@ function Comment(props) {
     });
   };
 
+  console.log("comment", likeDetail);
   useEffect(() => {
     let variable = { postId: postId, userId: user.userData?._id };
     axios.post("/api/like/getLikes", variable).then((response) => {
@@ -84,6 +85,7 @@ function Comment(props) {
                   <SingleComment
                     refreshFunction={props.refreshFunction}
                     comment={comment}
+                    likeDetail={likeDetail}
                     postId={postId}
                   />
                   <ReplyComment

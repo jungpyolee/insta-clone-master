@@ -25,7 +25,7 @@ function UserPage(props) {
     getPhotos(body);
 
     getPostLength(body);
-  }, []);
+  }, [userPageId]);
 
   const getUser = (body) => {
     axios.post("/api/users/getUser", body).then((response) => {
@@ -123,15 +123,26 @@ function UserPage(props) {
               {userInfo.nickname}
             </div>
             {userPageId === props.user.userData?._id ? (
-              <Button>
-                <Link to="/setting">프로필 편집</Link>
-              </Button>
+              <div>
+                <Button>
+                  <Link to="/setting">프로필 편집</Link>
+                </Button>
+                <div style={{ display: "none" }}>
+                  <Follow
+                    refreshFollower={refreshFollower}
+                    refreshFollowing={refreshFollowing}
+                    userId={userInfo._id}
+                  />
+                </div>
+              </div>
             ) : (
-              <Follow
-                refreshFollower={refreshFollower}
-                refreshFollowing={refreshFollowing}
-                userId={userInfo._id}
-              />
+              <div>
+                <Follow
+                  refreshFollower={refreshFollower}
+                  refreshFollowing={refreshFollowing}
+                  userId={userInfo._id}
+                />
+              </div>
             )}
             {/* <SettingFilled /> */}
           </div>

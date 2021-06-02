@@ -20,10 +20,6 @@ function NavBar(props) {
     setVisible(false);
   };
 
-  const onHome = (e) => {
-    e.preventDefault();
-    props.history.push("/");
-  };
   return (
     <div style={{ position: "relative" }}>
       {user?.userData?.isAuth ? (
@@ -56,7 +52,7 @@ function NavBar(props) {
                 <FontAwesomeIcon
                   icon={["fab", "instagram"]}
                   size="2x"
-                  color="black"
+                  color="purple"
                 />
               </Link>
             </div>

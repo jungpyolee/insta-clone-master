@@ -86,4 +86,11 @@ router.post("/postLength", (req, res) => {
   });
 });
 
+router.delete("/postDelete", (req, res) => {
+  Photo.findOneAndDelete({ _id: req.body.id }).exec((err) => {
+    if (err) return res.status(400).json({ success: false, err });
+    return res.status(200).json({ success: true });
+  });
+});
+
 module.exports = router;

@@ -12,6 +12,8 @@ function UserPage(props) {
   const [PostSize, setPostSize] = useState(0);
   const [postLength, setPostLength] = useState(0);
   const [userInfo, setUserInfo] = useState("");
+  const [follower, setFollower] = useState([]);
+  const [following, setFollowing] = useState([]);
   const userPageId = props.match.params.id;
   useEffect(() => {
     let body = {
@@ -73,6 +75,13 @@ function UserPage(props) {
     setSkip(skip);
   };
 
+  const refreshFollower = (newFollower) => {
+    setFollower(newFollower);
+  };
+
+  const refreshFollowing = (newFollowing) => {
+    setFollowing(newFollowing);
+  };
   const renderCards = Photos.map((photo, index) => {
     return (
       <Col lg={8} key={index}>
@@ -107,14 +116,22 @@ function UserPage(props) {
           <Avatar src={userInfo.image} size={160}></Avatar>
         </div>
         <div style={{ width: "66%" }}>
-          <div style={{ fontSize: "1.7rem", fontWeight: "bold" }}>
-            {userInfo.nickname}
+          <div
+            style={{ display: "flex", fontSize: "1.7rem", fontWeight: "bold" }}
+          >
+            <div style={{ marginTop: 5, marginRight: 5 }}>
+              {userInfo.nickname}
+            </div>
             {userPageId === props.user.userData?._id ? (
               <Button>
                 <Link to="/setting">프로필 편집</Link>
               </Button>
             ) : (
-              <Follow />
+              <Follow
+                refreshFollower={refreshFollower}
+                refreshFollowing={refreshFollowing}
+                userId={userInfo._id}
+              />
             )}
             {/* <SettingFilled /> */}
           </div>
@@ -122,7 +139,8 @@ function UserPage(props) {
           {/* 게시물, 게시물수/ 팔로워, 팔로워 수 / 팔로우, 팔로우 수  */}
           <br />
           <div>
-            게시물 {postLength} &nbsp;&nbsp;팔로워 100 &nbsp;&nbsp;팔로우 100
+            게시물 {postLength} &nbsp;&nbsp;팔로워 {follower?.length}{" "}
+            &nbsp;&nbsp;팔로우 {following?.length}
           </div>
           <br />
           <div>

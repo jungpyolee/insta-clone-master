@@ -7,55 +7,54 @@ const { Follow } = require("../models/Follow");
 //           Follow
 //=================================
 
-router.post("/getFollow", (req, res) => {
-  let variable = {};
-
-  if (req.body.postId) {
-    variable = { postId: req.body.postId };
-  } else {
-    variable = { commentId: req.body.commentId };
-  }
-
-  Like.find(variable)
-    .populate("userId")
-    .exec((err, likes) => {
+router.post("/getFollower", (req, res) => {
+  Follow.find({ followTo: req.body.getFollower }) //페이지주인이 누구한테 팔로잉받는지
+    .populate("followFrom")
+    .exec((err, follower) => {
       if (err) return res.status(400).json({ success: false, err });
-      res.status(200).json({ success: true, likes });
-    });
+      res.status(200).json({ success: true, follower: follower });
+    }); //여기의 followFrom을 맵하면 누가 페이지주인을 팔로우하는지 목록이나옴
 });
 
-router.post("/uplike", (req, res) => {
-  let variable = {};
-
-  if (req.body.postId) {
-    variable = { postId: req.body.postId, userId: req.body.userId };
-  } else {
-    variable = { commentId: req.body.commentId, userId: req.body.userId };
-  }
-
-  // Like COllection에 클릭 정보 넣기
-
-  const like = new Like(variable);
-  like.save((err, likeResult) => {
+router.post("/getFollowing", (req, res) => {
+  Follow.find({ followFrom: req.body.getFollowing }) //페이지주인이 누구를 팔로우하는지
+    .populate("followTo")
+    .exec((err, following) => {
+      if (err) return res.status(400).json({ success: false, err });
+      res.status(200).json({ success: true, following: following });
+    }); //여기의 followFrom을 맵하면 페이지주인이 누구를 팔로우하는지 목록이나옴
+});
+router.post("/follow", (req, res) => {
+  const follow = new Follow(req.body);
+  follow.save((err) => {
     if (err) return res.status(400).json({ success: false, err });
-    return res.status(200).json({ success: true, likeResult });
+    return res.status(200).json({ success: true });
   });
 });
 
-// router.post("/unlike", (req, res) => {
-//   let variable = {};
+router.post("/doIfollowyou", (req, res) => {
+  Follow.find({ followTo: req.body.pageId, followFrom: req.body.userId }).exec(
+    (err, yesorno) => {
+      if (err) return res.status(400).json({ success: false, err });
+      return res.status(200).json({ success: true, yesorno: yesorno.length });
+    }
+  );
+});
 
-//   if (req.body.postId) {
-//     variable = { postId: req.body.postId, userId: req.body.userId };
-//   } else {
-//     variable = { commentId: req.body.commentId, userId: req.body.userId };
-//   }
+router.post("/doyoufollowme", (req, res) => {
+  Follow.find({ followTo: req.body.userId, followFrom: req.body.pageId }).exec(
+    (err, yesorno) => {
+      if (err) return res.status(400).json({ success: false, err });
+      return res.status(200).json({ success: true, yesorno: yesorno.length });
+    }
+  );
+});
 
-//   // Like COllection에 클릭 정보 지우기
+router.delete("/unfollow", (req, res) => {
+  Follow.findOneAndDelete(req.body).exec((err) => {
+    if (err) return res.status(400).json({ success: false, err });
+    return res.status(200).json({ success: true });
+  });
+});
 
-//   Like.findOneAndDelete(variable).exec((err, unlikeResult) => {
-//     if (err) return res.status(400).json({ success: false, err });
-//     return res.status(200).json({ success: true, unlikeResult });
-//   });
-// });
 module.exports = router;

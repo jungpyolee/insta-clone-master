@@ -3,7 +3,6 @@ import { Form, Button, Avatar, Input } from "antd";
 import { useSelector, useDispatch } from "react-redux";
 import { settingUser } from "../../../../_actions/user_actions";
 import ProfileUpload from "./ProfileUpload";
-import { Link } from "react-router-dom";
 function ProfileSetting(props) {
   const user = useSelector((state) => state.user);
 

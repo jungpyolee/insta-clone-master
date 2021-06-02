@@ -1,10 +1,9 @@
 import axios from "axios";
 import timeBefore from "../../../../src/_utils/timeBefore";
 import React, { useEffect, useState } from "react";
-import { Button, Carousel } from "antd";
 import Avatar from "antd/lib/avatar/avatar";
 import { Link } from "react-router-dom";
-import { CloseOutlined, LeftOutlined, RightOutlined } from "@ant-design/icons";
+import { CloseOutlined, DeleteOutlined } from "@ant-design/icons";
 import Comment from "./Comment";
 import PhotoSwiper from "../../../_utils/PhotoSwiper";
 function PostDetail(props) {
@@ -12,7 +11,19 @@ function PostDetail(props) {
   const [post, setPost] = useState(null);
   const [comments, setComments] = useState([]);
 
-  console.log(post);
+  const postDelete = () => {
+    axios
+      .delete("/api/photo/postDelete", { data: { id: postId } })
+      .then((response) => {
+        if (response.data.success) {
+          console.log("삭제성공");
+          props.history.goBack();
+        } else {
+          alert("삭제실패");
+        }
+      });
+  };
+
   useEffect(() => {
     let body = {
       postId: postId,
@@ -119,6 +130,10 @@ function PostDetail(props) {
                   <br />
                   <div style={{ fontSize: "0.8rem" }}>장소:{post.location}</div>
                 </Link>
+              </div>
+
+              <div>
+                <DeleteOutlined onClick={postDelete} />
               </div>
             </div>
           )}

@@ -3,7 +3,6 @@ import axios from "axios";
 import React, { useState } from "react";
 
 import Dropzone from "react-dropzone";
-import { UploadOutlined } from "@ant-design/icons";
 
 function ProfileUpload(props) {
   const [images, setImages] = useState([]);

@@ -15,6 +15,10 @@ import SingleComment from "./SingleComment";
 import moment from "moment";
 import "moment/locale/ko";
 import Like from "../../../_utils/Like";
+import "./UserPageStyle/Comment.css";
+import UserHover from "../../../_utils/UserHover";
+import { Link } from "react-router-dom";
+import LikeDetail from "../../../_utils/LikeDetail";
 function Comment(props) {
   const postId = props.postId;
   const user = useSelector((state) => state.user);
@@ -22,12 +26,26 @@ function Comment(props) {
   const [likes, setLikes] = useState(0);
   const [likey, setLikey] = useState(0);
   const [likeDetail, setLikeDetail] = useState([]);
-  const postDate = moment(props.post.createdAt).format("lll");
-  const refreshFunction = (newlikes) => {
+  const [likeDetailBox, setLikeDetailBox] = useState(false);
+
+  const onLikeDetail = () => {
+    setLikeDetailBox(!likeDetailBox);
+  };
+  const refreshFunction = (newlikes, newLikeDetails) => {
     setLikes(newlikes);
     setLikey(newlikes - 1);
+    setLikeDetail(likeDetail.concat(newLikeDetails));
   };
 
+  const refreshUnlike = (unlikeResult) => {
+    const currentIndex = likeDetail.indexOf(unlikeResult);
+
+    let newLikeDetail = [...likeDetail];
+
+    newLikeDetail.splice(currentIndex, 1);
+
+    setLikeDetail(newLikeDetail);
+  };
   const handleClick = (e) => {
     setCommentValue(e.target.value);
   };
@@ -52,7 +70,7 @@ function Comment(props) {
     });
   };
 
-  console.log("comment", likeDetail);
+  console.log(likeDetail[0]?.userId);
   useEffect(() => {
     let variable = { postId: postId, userId: user.userData?._id };
     axios.post("/api/like/getLikes", variable).then((response) => {
@@ -67,9 +85,10 @@ function Comment(props) {
   }, []);
 
   return (
-    <div style={{ borderTop: "1px solid black", height: 350 }}>
+    <div style={{ borderTop: "1px solid lightgrey", height: 350 }}>
       {/* Comment Lists */}
       <div
+        className="commentlist"
         style={{
           height: 265,
           overflowY: "scroll",
@@ -102,7 +121,7 @@ function Comment(props) {
       <div
         style={{
           height: 103,
-          borderTop: "1px solid black",
+          borderTop: "1px solid lightgray",
           padding: "8 16",
           marginTop: 8,
         }}
@@ -118,7 +137,11 @@ function Comment(props) {
             }}
           >
             <div style={{ display: "flex" }}>
-              <Like refreshFunction={refreshFunction} postId={postId} />
+              <Like
+                refreshUnlike={refreshUnlike}
+                refreshFunction={refreshFunction}
+                postId={postId}
+              />
               <div>
                 <MessageOutlined
                   style={{ cursor: "pointer", marginLeft: 10, marginRight: 10 }}
@@ -135,15 +158,44 @@ function Comment(props) {
           <div style={{ marginLeft: 8 }}>
             {likes === 1 ? (
               <div>
-                <b>{user?.userData?.nickname}</b>님이 좋아합니다.
+                <div className="tooltip">
+                  <div className="nicknamebox">
+                    <b className="nickname">
+                      <Link to={`/user/${likeDetail[0]?.userId._id}`}>
+                        <div style={{ color: "black" }}>
+                          {likeDetail[0]?.userId.nickname}
+                        </div>
+                      </Link>
+                    </b>
+                    <div className="tooltipbox">
+                      <UserHover user={likeDetail[0]?.userId} />
+                    </div>
+                  </div>
+                </div>
+                님이 좋아합니다.
               </div>
             ) : null}
             {likes > 1 ? (
               <div>
-                <b style={{ fontSize: "1.1rem" }}>
-                  {likeDetail[0]?.userId.nickname}
+                <div className="tooltip">
+                  <div className="nicknamebox">
+                    <b className="nickname">
+                      <Link to={`/user/${likeDetail[0]?.userId._id}`}>
+                        <div style={{ color: "black" }}>
+                          {likeDetail[0]?.userId.nickname}
+                        </div>
+                      </Link>
+                    </b>
+                    <div className="tooltipbox">
+                      <UserHover user={likeDetail[0]?.userId} />
+                    </div>
+                  </div>
+                </div>
+                님{" "}
+                <b style={{ cursor: "pointer" }} onClick={onLikeDetail}>
+                  외 {likey}&nbsp;명
                 </b>
-                님 <b>외 {likey}&nbsp;명</b>이 좋아합니다.
+                이 좋아합니다.
               </div>
             ) : null}
           </div>
@@ -152,11 +204,15 @@ function Comment(props) {
       {/* Root Comment Form */}
       <div>
         <Form style={{ display: "flex" }} onSubmit={onSubmit}>
-          <textarea
-            style={{ width: "100%", borderRadius: "5px" }}
+          <input
+            style={{
+              width: "100%",
+              borderRadius: "3px",
+              border: "1px solid lightgray",
+            }}
             onChange={handleClick}
             value={commentValue}
-            placeholder="댓글을 작성해주세요"
+            placeholder=" 댓글을 작성해주세요"
           />
           <Button
             onClick={onSubmit}
@@ -164,9 +220,30 @@ function Comment(props) {
             style={{ width: "20%", height: "52px" }}
           >
             {" "}
-            게시
+            <b>게시</b>
           </Button>
         </Form>
+
+        {likeDetailBox && (
+          <div
+            id="likeDetailBox"
+            style={{
+              backgroundColor: "rgba(0,0,0,0.9)",
+              position: "fixed",
+              top: 0,
+              left: 0,
+              right: 0,
+              bottom: 0,
+              zIndex: 10,
+            }}
+            onClick={(e) => {
+              e.target.id === "likeDetailBox" &&
+                setLikeDetailBox(!likeDetailBox);
+            }}
+          >
+            <LikeDetail likeDetail={likeDetail} openHandler={onLikeDetail} />
+          </div>
+        )}
       </div>
     </div>
   );

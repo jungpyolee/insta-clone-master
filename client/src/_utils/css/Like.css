@@ -1,0 +1,11 @@
+.filled:active {
+  filter: brightness(90%);
+}
+
+.unfilled:hover {
+  stroke: black;
+  stroke-width: 5;
+}
+.filled:hover {
+  filter: brightness(110%);
+}

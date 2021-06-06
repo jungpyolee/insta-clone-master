@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { HeartFilled, HeartOutlined } from "@ant-design/icons";
 import axios from "axios";
 import { useSelector } from "react-redux";
-
+import "./css/Like.css";
 function Like(props) {
   const user = useSelector((state) => state.user);
   const [liked, setLiked] = useState(false);
@@ -47,8 +47,8 @@ function Like(props) {
         if (response.data.success) {
           setLikes(likes + 1);
           setLiked(true);
-
-          onRefresh(likes + 1);
+          console.log(response.data);
+          onRefresh(likes + 1, response.data.result);
         } else {
           alert("좋아요실패");
         }
@@ -58,8 +58,8 @@ function Like(props) {
         if (response.data.success) {
           setLikes(likes - 1);
           setLiked(false);
-
           onRefresh(likes - 1);
+          props.refreshUnlike(response.data.unlikeResult);
         } else {
           alert("좋아요취소실패");
         }
@@ -70,12 +70,16 @@ function Like(props) {
   return (
     <div>
       {liked ? (
-        <HeartFilled
-          style={{ color: "red", cursor: "pointer" }}
-          onClick={onLiked}
-        />
+        <div className="filled">
+          <HeartFilled
+            style={{ color: "red", cursor: "pointer" }}
+            onClick={onLiked}
+          />
+        </div>
       ) : (
-        <HeartOutlined style={{ cursor: "pointer" }} onClick={onLiked} />
+        <div className="unfilled">
+          <HeartOutlined style={{ cursor: "pointer" }} onClick={onLiked} />
+        </div>
       )}
     </div>
   );

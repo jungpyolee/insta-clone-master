@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { Button, Col, Row, Card } from "antd";
-import { SettingFilled } from "@ant-design/icons";
 import Avatar from "antd/lib/avatar/avatar";
 import axios from "axios";
 import { Link } from "react-router-dom";
@@ -120,27 +119,25 @@ function UserPage(props) {
             style={{ display: "flex", fontSize: "1.7rem", fontWeight: "bold" }}
           >
             <div style={{ marginTop: 5, marginRight: 5 }}>
-              {userInfo.nickname}
+              {userInfo?.nickname}
             </div>
             {userPageId === props.user.userData?._id ? (
               <div>
                 <Button>
                   <Link to="/setting">프로필 편집</Link>
                 </Button>
-                <div style={{ display: "none" }}>
-                  <Follow
-                    refreshFollower={refreshFollower}
-                    refreshFollowing={refreshFollowing}
-                    userId={userInfo._id}
-                  />
-                </div>
+                <Follow
+                  refreshFollower={refreshFollower}
+                  refreshFollowing={refreshFollowing}
+                  userId={userPageId}
+                />
               </div>
             ) : (
               <div>
                 <Follow
                   refreshFollower={refreshFollower}
                   refreshFollowing={refreshFollowing}
-                  userId={userInfo._id}
+                  userId={userPageId}
                 />
               </div>
             )}
@@ -150,14 +147,14 @@ function UserPage(props) {
           {/* 게시물, 게시물수/ 팔로워, 팔로워 수 / 팔로우, 팔로우 수  */}
           <br />
           <div>
-            게시물 {postLength} &nbsp;&nbsp;팔로워 {follower?.length}{" "}
-            &nbsp;&nbsp;팔로우 {following?.length}
+            게시물 {postLength} &nbsp;&nbsp;팔로워 {follower.length}{" "}
+            &nbsp;&nbsp;팔로우 {following.length}
           </div>
           <br />
           <div>
-            <b>{userInfo.name}</b>
+            <b>{userInfo?.name}</b>
           </div>{" "}
-          <div style={{ width: 320 }}>{userInfo.description}</div>
+          <div style={{ width: 320 }}>{userInfo?.description}</div>
           {/* 유저 description */}
         </div>
       </div>

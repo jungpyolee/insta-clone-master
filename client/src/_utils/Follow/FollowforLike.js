@@ -65,14 +65,12 @@ function FollowforLike(props) {
     axios.post("/api/follow/getFollower", body).then((response) => {
       if (response.data.success) {
         setFollower(response.data.follower);
-        console.log(response.data.follower);
       } else alert("팔로워 가져오기실패");
     });
 
     axios.post("/api/follow/getFollowing", body).then((response) => {
       if (response.data.success) {
         setFollowing(response.data.following);
-        console.log(response.data.following);
       } else alert("팔로잉 가져오기실패");
     });
   };
@@ -94,8 +92,6 @@ function FollowforLike(props) {
       } else alert("언팔 실패");
     });
   };
-
-  console.log("followTo", followTo, "followFrom", followFrom);
 
   if (isFollowing === 1 && followTo === followFrom) {
     return <div></div>;

@@ -7,7 +7,7 @@ import LandingPagePost from "./LandingPageDetail.js/LandingPagePost";
 import SideBar from "./LandingPageDetail.js/SideBar";
 // import NavBar from "../NavBar/NavBar";
 // import UserPage from "../UserPage/UserPage";
-
+import UserHover from "../../../_utils/UserHover";
 function LandingPage(props) {
   // const user = useSelector((state) => state.user);
 
@@ -16,7 +16,6 @@ function LandingPage(props) {
       <LandingPagePost />
       <SideBar />
       <br />
-      <Follow />
     </div>
   );
 }

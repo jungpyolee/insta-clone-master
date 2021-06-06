@@ -5,7 +5,6 @@ import { useSelector } from "react-redux";
 import timeBefore from "../../../../src/_utils/timeBefore";
 
 import Like from "../../../_utils/Like";
-import { CloseOutlined } from "@ant-design/icons";
 import LikeDetail from "../../../_utils/LikeDetail";
 function SingleComment(props) {
   const { TextArea } = Input;
@@ -15,17 +14,21 @@ function SingleComment(props) {
   const [openReply, setOpenReply] = useState(false);
   const [commentValue, setCommentValue] = useState("");
   const [openLikes, setOpenLikes] = useState(false);
-
   const [likeDetail, setLikeDetail] = useState([]);
   const refreshFunction = (newLikes, newLikeDetail) => {
     setLikes(newLikes);
-    setLikeDetail(newLikeDetail);
+    setLikeDetail(likeDetail.concat(newLikeDetail));
   };
 
-  // const refreshLikesInfo = (newLikesInfo) => {
-  //   setLikesInfo(newLikesInfo);
-  // };
+  const refreshUnlike = (unlikeResult) => {
+    const currentIndex = likeDetail.indexOf(unlikeResult);
 
+    let newLikeDetail = [...likeDetail];
+
+    newLikeDetail.splice(currentIndex, 1);
+
+    setLikeDetail(newLikeDetail);
+  };
   const actions = [
     <div
       style={{
@@ -86,12 +89,12 @@ function SingleComment(props) {
     setCommentValue(e.target.value);
   };
 
-  console.log("singlecomment", likeDetail);
+  console.log("singlecomment", likes, likeDetail);
   return (
     <div>
       <div style={{ display: "flex" }}>
         <Comment
-          style={{ width: "80%", marginLeft: 3 }}
+          style={{ width: "100%", marginLeft: 3 }}
           actions={actions}
           author={props.comment.writer.nickname}
           avatar={<Avatar src={props.comment.writer.image} alt="image" />}
@@ -111,6 +114,7 @@ function SingleComment(props) {
           <Like
             commentId={props.comment._id}
             refreshFunction={refreshFunction}
+            refreshUnlike={refreshUnlike}
           />
         </div>
       </div>

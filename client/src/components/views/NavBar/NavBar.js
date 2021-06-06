@@ -24,15 +24,15 @@ function NavBar(props) {
     <div style={{ position: "relative" }}>
       {user?.userData?.isAuth ? (
         <div
-          style={{
-            position: "fixed",
-            width: "100%",
-            top: 0,
-            right: 0,
-            left: 0,
-            height: 54,
-            borderBottom: "1px solid #dbdbdb",
-          }}
+        // style={{
+        //   position: "fixed",
+        //   width: "100%",
+        //   top: 0,
+        //   right: 0,
+        //   left: 0,
+        //   height: 54,
+        //   borderBottom: "1px solid #dbdbdb",
+        // }}
         >
           <nav
             className="menu"
@@ -45,6 +45,7 @@ function NavBar(props) {
               height: "54px",
               margin: "0 auto",
               borderBottom: "1px solid #dbdbdb",
+              zIndex: 2,
             }}
           >
             <div className="menu__logo">

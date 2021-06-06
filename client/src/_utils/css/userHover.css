@@ -1,0 +1,105 @@
+.body {
+  width: 390px;
+
+  border-radius: 8px;
+  border: 1px solid lightskyblue;
+  background-color: white;
+}
+
+.profile {
+  display: flex;
+  height: 94px;
+  padding: 16px;
+  border-bottom: 1px solid lightcyan;
+}
+
+.profile_left {
+}
+
+.profile_right {
+  margin-left: 10px;
+  line-height: 0.9rem;
+  width: 300px;
+  overflow: hidden;
+}
+.profile_description {
+  word-wrap: break-word;
+}
+.profile_right:hover {
+  overflow-y: scroll;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.profile_right::-webkit-scrollbar {
+  display: none;
+}
+
+.postsizeWithfollower {
+  height: 68px;
+  border-bottom: 1px solid lightcyan;
+  display: flex;
+}
+
+.box {
+  width: 130px;
+  margin: auto 0;
+}
+
+.innerBox {
+  height: 54px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.innerTop {
+  height: 18px;
+}
+
+.innerBottom {
+  height: 18px;
+}
+.posts {
+  height: 130px;
+  border-bottom: 1px solid lightcyan;
+  display: flex;
+}
+
+.postbox {
+  width: 130px;
+}
+
+.postbox:hover {
+  filter: brightness(120%);
+}
+
+.postbox:active {
+  filter: brightness(80%);
+}
+
+/* 각postbox hover 시 lighter 0.1 */
+
+.sendingMessageAndfollow {
+  width: 390px;
+  height: 62px;
+  display: flex;
+  align-items: center;
+}
+
+.settingbox {
+  width: 390px;
+  display: flex;
+  justify-content: center;
+}
+.messagebox {
+  width: 60%;
+  display: flex;
+  justify-content: center;
+}
+
+.followbox {
+  width: 35%;
+  display: flex;
+  justify-content: center;
+}

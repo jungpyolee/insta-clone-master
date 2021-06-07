@@ -136,7 +136,7 @@ function LandingPageComment(props) {
           <div style={{ marginLeft: 8 }}>
             {likes === 1 ? (
               <div>
-                <div className="tooltip">
+                <div className="tooltips">
                   <div className="nicknamebox">
                     <b className="nickname">
                       <Link to={`/user/${likeDetail[0]?.userId._id}`}>
@@ -155,7 +155,7 @@ function LandingPageComment(props) {
             ) : null}
             {likes > 1 ? (
               <div>
-                <div className="tooltip">
+                <div className="tooltips">
                   <div className="nicknamebox">
                     <b className="nickname">
                       <Link to={`/user/${likeDetail[0]?.userId._id}`}>

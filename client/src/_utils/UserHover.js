@@ -7,8 +7,6 @@ import { Link } from "react-router-dom";
 import "./css/userHover.css";
 import Follow from "./Follow/Follow";
 import { Card } from "antd";
-import { styled } from "styled-components";
-import { lighten } from "polished";
 
 // UserHover  쓰는 곳?
 

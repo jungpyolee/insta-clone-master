@@ -4,8 +4,7 @@ import Form from "antd/lib/form/Form";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import ReplyComment from "../../UserPage/ReplyComment";
-import SingleComment from "../../UserPage/SingleComment";
+
 import "moment/locale/ko";
 import Like from "../../../../_utils/Like";
 import "./LandingPageComment.css";

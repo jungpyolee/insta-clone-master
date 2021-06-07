@@ -1,19 +1,11 @@
 import React, { useState } from "react";
-import { Form, Comment, Avatar, Button, Input } from "antd";
-import axios from "axios";
+
 import { useSelector } from "react-redux";
-import timeBefore from "../../../../../src/_utils/timeBefore";
 
 import Like from "../../../../_utils/Like";
-import LikeDetail from "../../../../_utils/LikeDetail";
 function LandingPageSingleComment(props) {
-  const { TextArea } = Input;
-  const postId = props.postId;
-  const user = useSelector((state) => state.user);
   const [likes, setLikes] = useState(0);
-  const [openReply, setOpenReply] = useState(false);
-  const [commentValue, setCommentValue] = useState("");
-  const [openLikes, setOpenLikes] = useState(false);
+
   const [likeDetail, setLikeDetail] = useState([]);
   const refreshFunction = (newLikes, newLikeDetail) => {
     setLikes(newLikes);
@@ -28,34 +20,6 @@ function LandingPageSingleComment(props) {
     newLikeDetail.splice(currentIndex, 1);
 
     setLikeDetail(newLikeDetail);
-  };
-
-  const onSubmit = (e) => {
-    e.preventDefault();
-    let variables = {
-      content: commentValue,
-      writer: user.userData._id,
-      postId: postId,
-      responseTo: props.comment._id,
-    };
-
-    axios.post("/api/comment/saveComment", variables).then((response) => {
-      if (response.data.success) {
-        console.log(response.data.result);
-        props.refreshFunction(response.data.result);
-        setCommentValue("");
-        setOpenReply(false);
-      } else {
-        alert("코멘트 저장실패");
-      }
-    });
-  };
-
-  const openHandler = () => {
-    setOpenLikes(!openLikes);
-  };
-  const onHandleChange = (e) => {
-    setCommentValue(e.target.value);
   };
 
   return (

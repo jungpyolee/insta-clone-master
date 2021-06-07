@@ -128,7 +128,11 @@ function PostDetail(props) {
                 >
                   {post.writer.nickname}
                   <br />
-                  <div style={{ fontSize: "0.8rem" }}>장소:{post.location}</div>
+                  {post.location && (
+                    <div style={{ fontSize: "0.8rem" }}>
+                      장소:{post.location}
+                    </div>
+                  )}
                 </Link>
               </div>
 

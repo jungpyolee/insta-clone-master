@@ -77,21 +77,17 @@ router.get("/photos", (req, res) => {
     });
 });
 
-router.get("/photos", (req, res) => {
-  let limit = req.query.limit ? parseInt(req.query.limit) : 20;
-  let skip = req.query.skip ? parseInt(req.query.skip) : 0;
+router.post("/landingPagePhoto", (req, res) => {
+  // let limit = req.query.limit ? parseInt(req.query.limit) : 20;
+  // let skip = req.query.skip ? parseInt(req.query.skip) : 0;
 
-  Photo.find({ writer: req.query.id })
+  Photo.find({ writer: { $in: req.body.id } })
     .populate("writer")
     .sort({ createdAt: -1 })
-    .skip(skip)
-    .limit(limit)
     .exec((err, photoInfo) => {
       console.log(photoInfo);
       if (err) return res.status(400).json({ success: false, err });
-      return res
-        .status(200)
-        .json({ success: true, photoInfo, postSize: photoInfo.length });
+      return res.status(200).json({ success: true, photoInfo });
     });
 });
 

@@ -25,6 +25,7 @@ router.post("/getFollowing", (req, res) => {
       res.status(200).json({ success: true, following: following });
     }); //여기의 followFrom을 맵하면 페이지주인이 누구를 팔로우하는지 목록이나옴
 });
+
 router.post("/follow", (req, res) => {
   const follow = new Follow(req.body);
   follow.save((err) => {

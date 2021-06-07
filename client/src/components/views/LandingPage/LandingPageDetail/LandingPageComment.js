@@ -4,15 +4,16 @@ import Form from "antd/lib/form/Form";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import ReplyComment from "./ReplyComment";
-import SingleComment from "./SingleComment";
+import ReplyComment from "../../UserPage/ReplyComment";
+import SingleComment from "../../UserPage/SingleComment";
 import "moment/locale/ko";
-import Like from "../../../_utils/Like";
-import "./UserPageStyle/Comment.css";
-import UserHover from "../../../_utils/UserHover";
+import Like from "../../../../_utils/Like";
+import "./LandingPageComment.css";
+import UserHover from "../../../../_utils/UserHover";
 import { Link } from "react-router-dom";
-import LikeDetail from "../../../_utils/LikeDetail";
-function Comment(props) {
+import LikeDetail from "../../../../_utils/LikeDetail";
+import LandingPageSingleComment from "./LandingPageSingleComment";
+function LandingPageComment(props) {
   const postId = props.postId;
   const user = useSelector((state) => state.user);
   const [commentValue, setCommentValue] = useState("");
@@ -94,45 +95,13 @@ function Comment(props) {
   }, []);
 
   return (
-    <div style={{ height: 350 }}>
-      {/* Comment Lists */}
-      <div
-        className="commentlist"
-        style={{
-          height: 265,
-          overflowY: "scroll",
-          paddingLeft: 16,
-        }}
-      >
-        {" "}
-        {props.commentLists &&
-          props.commentLists.map(
-            (comment, index) =>
-              !comment.responseTo && (
-                <div>
-                  <SingleComment
-                    refreshFunction={props.refreshFunction}
-                    comment={comment}
-                    likeDetail={likeDetail}
-                    postId={postId}
-                  />
-                  <ReplyComment
-                    parentCommentId={comment._id}
-                    refreshFunction={props.refreshFunction}
-                    postId={postId}
-                    commentLists={props.commentLists}
-                  />
-                </div>
-              )
-          )}
-      </div>
+    <div style={{ borderTop: "1px solid lightgrey", height: 350 }}>
       {/* 좋아요 폼 */}
       <div
         style={{
-          height: 103,
+          height: 72,
           borderTop: "1px solid lightgray",
           padding: "8 16",
-          marginTop: 8,
         }}
       >
         <div>
@@ -143,6 +112,7 @@ function Comment(props) {
               display: "flex",
               justifyContent: "space-between",
               padding: 5,
+              paddingTop: 0,
             }}
           >
             <div style={{ display: "flex" }}>
@@ -210,6 +180,40 @@ function Comment(props) {
           </div>
         </div>
       </div>
+      {/* Comment Lists */}
+      <div
+        className="commentlist"
+        style={{
+          height: 78,
+          overflowY: "hidden",
+          paddingLeft: 5,
+        }}
+      >
+        {" "}
+        {props.commentLists &&
+          props.commentLists.map(
+            (comment, index) =>
+              !comment.responseTo && (
+                <div>
+                  <LandingPageSingleComment
+                    refreshFunction={props.refreshFunction}
+                    comment={comment}
+                    likeDetail={likeDetail}
+                    postId={postId}
+                  />
+                  {/* <div style={{ display: "none" }}>
+                    <ReplyComment
+                      parentCommentId={comment._id}
+                      refreshFunction={props.refreshFunction}
+                      postId={postId}
+                      commentLists={props.commentLists}
+                    />
+                  </div> */}
+                </div>
+              )
+          )}
+      </div>
+
       {/* Root Comment Form */}
       <div>
         <Form style={{ display: "flex" }} onSubmit={onSubmit}>
@@ -218,6 +222,7 @@ function Comment(props) {
               width: "100%",
               borderRadius: "3px",
               border: "1px solid lightgray",
+              borderLeft: "none",
             }}
             onChange={handleClick}
             value={commentValue}
@@ -258,4 +263,4 @@ function Comment(props) {
   );
 }
 
-export default Comment;
+export default LandingPageComment;

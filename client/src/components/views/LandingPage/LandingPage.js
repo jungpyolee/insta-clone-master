@@ -3,8 +3,8 @@ import Follow from "../../../_utils/Follow/Follow";
 // import { useSelector } from "react-redux";
 
 // import Footer from "../Footer/Footer";
-import LandingPagePost from "./LandingPageDetail.js/LandingPagePost";
-import SideBar from "./LandingPageDetail.js/SideBar";
+import LandingPagePost from "./LandingPageDetail/LandingPagePost";
+import SideBar from "./LandingPageDetail/SideBar";
 
 // import NavBar from "../NavBar/NavBar";
 // import UserPage from "../UserPage/UserPage";

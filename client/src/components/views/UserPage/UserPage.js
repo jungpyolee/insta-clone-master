@@ -163,14 +163,12 @@ function UserPage(props) {
       <br />
       <hr />
       {/* ic 게시물, ic IGTV, ic 저장됨, ic 태그됨 */}
-      <div style={{ display: "flex", justifyContent: "center" }}>
-        게시물&nbsp;&nbsp;IGTV&nbsp;&nbsp;저장됨&nbsp;&nbsp;태그됨
-      </div>
 
       {/* 유저 게시물 map (3개씩) */}
       <Row
         style={{
           marginLeft: "0.5rem",
+          marginTop: 25,
         }}
         gutter={[16, 16]}
       >

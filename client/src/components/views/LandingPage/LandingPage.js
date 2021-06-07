@@ -5,9 +5,10 @@ import Follow from "../../../_utils/Follow/Follow";
 // import Footer from "../Footer/Footer";
 import LandingPagePost from "./LandingPageDetail.js/LandingPagePost";
 import SideBar from "./LandingPageDetail.js/SideBar";
+
 // import NavBar from "../NavBar/NavBar";
 // import UserPage from "../UserPage/UserPage";
-import UserHover from "../../../_utils/UserHover";
+
 function LandingPage(props) {
   // const user = useSelector((state) => state.user);
 
@@ -15,6 +16,7 @@ function LandingPage(props) {
     <div style={{ paddingTop: 30 }}>
       <LandingPagePost />
       <SideBar />
+
       <br />
     </div>
   );

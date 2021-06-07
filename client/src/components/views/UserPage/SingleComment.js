@@ -89,7 +89,6 @@ function SingleComment(props) {
     setCommentValue(e.target.value);
   };
 
-  console.log("singlecomment", likes, likeDetail);
   return (
     <div>
       <div style={{ display: "flex" }}>

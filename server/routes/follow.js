@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 
 const { Follow } = require("../models/Follow");
+const { Notification } = require("../models/Notification");
 
 //=================================
 //           Follow

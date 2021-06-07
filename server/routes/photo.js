@@ -77,6 +77,24 @@ router.get("/photos", (req, res) => {
     });
 });
 
+router.get("/photos", (req, res) => {
+  let limit = req.query.limit ? parseInt(req.query.limit) : 20;
+  let skip = req.query.skip ? parseInt(req.query.skip) : 0;
+
+  Photo.find({ writer: req.query.id })
+    .populate("writer")
+    .sort({ createdAt: -1 })
+    .skip(skip)
+    .limit(limit)
+    .exec((err, photoInfo) => {
+      console.log(photoInfo);
+      if (err) return res.status(400).json({ success: false, err });
+      return res
+        .status(200)
+        .json({ success: true, photoInfo, postSize: photoInfo.length });
+    });
+});
+
 router.post("/postLength", (req, res) => {
   Photo.find({ writer: req.body.id }).exec((err, postLength) => {
     if (err) return res.status(400).json({ success: false, err });

@@ -1,0 +1,34 @@
+.rightIcon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  padding: 6px;
+  background: white;
+  border-radius: 8px;
+  margin-left: 8px;
+  width: 42px;
+  height: 40px;
+  font-size: 1rem;
+  box-shadow: 0 0 10px rgb(0 0 0 / 20%);
+  cursor: pointer;
+  margin-top: -5px;
+  margin-right: 5px;
+}
+
+.Icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  padding: 6px;
+  background: white;
+  border-radius: 8px;
+  margin-left: 2px;
+  width: 42px;
+  height: 40px;
+  font-size: 1rem;
+  box-shadow: 0 0 10px rgb(0 0 0 / 20%);
+  cursor: pointer;
+  margin-top: -5px;
+}

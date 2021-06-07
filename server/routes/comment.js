@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 
 const { Comment } = require("../models/Comment");
+const { Notification } = require("../models/Notification");
 
 //=================================
 //             Comment
@@ -22,6 +23,14 @@ router.post("/saveComment", (req, res) => {
   });
 });
 
+router.post("/saveCommentNotify", (req, res) => {
+  const notification = new Notification(req.body);
+  console.log(req.body);
+  notification.save((err, notify) => {
+    if (err) return res.json({ success: false, err });
+    res.json({ success: true });
+  });
+});
 router.post("/getComments", (req, res) => {
   Comment.find({ postId: req.body.postId })
     .populate("writer")

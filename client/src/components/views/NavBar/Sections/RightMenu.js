@@ -6,12 +6,14 @@ import { USER_SERVER } from "../../../Config";
 import { Link, withRouter } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+// import NotifyMe from "react-notification-timeline";
+import NotifyMe from "./Notification/NotifyMe";
 import {
   faComments,
   faUserCircle,
   faBookmark,
 } from "@fortawesome/free-regular-svg-icons";
-
+import "./RightMenu.css";
 import {
   faCog,
   faExchangeAlt,
@@ -19,15 +21,44 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { Menu } from "antd";
 import Avatar from "antd/lib/avatar/avatar";
+import { HomeOutlined, UploadOutlined } from "@ant-design/icons";
 
 function RightMenu(props) {
   const user = useSelector((state) => state.user);
+  const [data, setData] = useState([]);
+
   const [avatar, setAvatar] = useState("");
   useEffect(() => {
+    let body = {
+      myId: user.userData._id,
+    };
+    // user.userData._id 의 notification 정보가져와서 setData에 넣어주기
+    axios.post("/api/notification/getNotify", body).then((response) => {
+      if (response.data.success) {
+        console.log(response.data);
+        response.data.commentNotify.map((notify) => {
+          if (notify.userId._id === notify.myId) {
+            setData(data);
+          } else {
+            setData(
+              data.concat({
+                update: `${notify.userId.nickname}님이 댓글을 남겼습니다.`,
+                timestamp: Number(new Date(notify.createdAt)),
+                image: notify.userId.image,
+                postId: notify.postId,
+              })
+            );
+          }
+        });
+      } else {
+        alert("Fail to getNotify");
+      }
+    });
+
     if (user.userData && user.userData.image) {
       setAvatar(user.userData.image);
     }
-  }, [user]);
+  }, []);
   const [open, setOpen] = useState(false);
 
   const onToggle = () => {
@@ -52,38 +83,29 @@ function RightMenu(props) {
         }}
       >
         <Link to="/">
-          <FontAwesomeIcon
-            style={{ marginLeft: "23px", marginRight: "10px" }}
-            icon="home"
-            size="2x"
-            color="black"
-          />
+          <div className="rightIcon">
+            <HomeOutlined style={{ color: "black", fontSize: "25px" }} />
+          </div>
         </Link>
 
-        <a href="/direct/inbox">
-          <FontAwesomeIcon
-            style={{ marginRight: "10px" }}
-            icon={faComments}
-            size="2x"
-            color="black"
-          />
-        </a>
         <Link to="/upload">
-          <FontAwesomeIcon
-            style={{ marginRight: "10px" }}
-            icon={faUpload}
-            size="2x"
-            color="black"
-          />
+          <div className="rightIcon">
+            <UploadOutlined style={{ color: "black", fontSize: "25px" }} />
+          </div>
         </Link>
-        <FontAwesomeIcon
-          style={{ marginRight: "10px" }}
-          icon="heart"
-          size="2x"
-          color="black"
+        <NotifyMe
+          data={data}
+          storageKey="notific_key"
+          notific_key="timestamp"
+          notific_value="update"
+          notific_img="image"
+          heading=" "
+          sortedByKey={false}
+          showDate={false}
+          size={25}
         />
 
-        <div style={{ cursor: "pointer" }} onClick={onToggle}>
+        <div className="Icon" onClick={onToggle}>
           <Avatar src={avatar} />
         </div>
       </div>
@@ -96,7 +118,7 @@ function RightMenu(props) {
               transform: "rotate(45deg)",
 
               position: "absolute",
-              right: "15px",
+              right: "14px",
               marginTop: "3px",
               zIndex: "2",
               background: "#ffffff",
@@ -119,7 +141,7 @@ function RightMenu(props) {
             <Menu.Item key="1" onClick={onToggle}>
               <Link to={`/user/${user.userData._id}`}>
                 <FontAwesomeIcon
-                  style={{ marginRight: "5px" }}
+                  style={{ marginRight: "10px" }}
                   icon={faUserCircle}
                 />
                 프로필
@@ -129,7 +151,7 @@ function RightMenu(props) {
             <Menu.Item key="2">
               <a href="/bookmark">
                 <FontAwesomeIcon
-                  style={{ marginRight: "5px" }}
+                  style={{ marginRight: "10px" }}
                   icon={faBookmark}
                 />
                 저장됨
@@ -137,7 +159,7 @@ function RightMenu(props) {
             </Menu.Item>
             <Menu.Item key="3" onClick={onToggle}>
               <Link to="/setting">
-                <FontAwesomeIcon style={{ marginRight: "5px" }} icon={faCog} />
+                <FontAwesomeIcon style={{ marginRight: "10px" }} icon={faCog} />
                 설정{" "}
               </Link>
             </Menu.Item>
@@ -145,7 +167,7 @@ function RightMenu(props) {
             <Menu.Item key="4" style={{ borderBottom: "1px solid black" }}>
               <a href="/exchange">
                 <FontAwesomeIcon
-                  style={{ marginRight: "5px" }}
+                  style={{ marginRight: "10px" }}
                   icon={faExchangeAlt}
                 />
                 계정 전환
@@ -153,7 +175,9 @@ function RightMenu(props) {
             </Menu.Item>
 
             <Menu.Item key="5">
-              <a onClick={logoutHandler}>로그아웃</a>
+              <a style={{ paddingLeft: 40 }} onClick={logoutHandler}>
+                로그아웃
+              </a>
             </Menu.Item>
           </Menu>
         </div>

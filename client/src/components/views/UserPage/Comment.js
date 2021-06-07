@@ -1,10 +1,4 @@
-import {
-  HeartFilled,
-  SaveOutlined,
-  SendOutlined,
-  HeartOutlined,
-  MessageOutlined,
-} from "@ant-design/icons";
+import { SaveOutlined, SendOutlined, MessageOutlined } from "@ant-design/icons";
 import { Button } from "antd";
 import Form from "antd/lib/form/Form";
 import axios from "axios";
@@ -12,7 +6,6 @@ import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import ReplyComment from "./ReplyComment";
 import SingleComment from "./SingleComment";
-import moment from "moment";
 import "moment/locale/ko";
 import Like from "../../../_utils/Like";
 import "./UserPageStyle/Comment.css";
@@ -27,7 +20,7 @@ function Comment(props) {
   const [likey, setLikey] = useState(0);
   const [likeDetail, setLikeDetail] = useState([]);
   const [likeDetailBox, setLikeDetailBox] = useState(false);
-
+  const postWriterId = props.post.writer._id;
   const onLikeDetail = () => {
     setLikeDetailBox(!likeDetailBox);
   };
@@ -63,7 +56,23 @@ function Comment(props) {
       if (response.data.success) {
         console.log(response.data.result);
         props.refreshFunction(response.data.result);
+        console.log(response.data.result);
         setCommentValue("");
+
+        let body = {
+          userId: user.userData._id,
+          commentId: response.data.result[0]._id,
+          myId: postWriterId,
+          notificationType: "comment",
+          postId: postId,
+        };
+        axios.post("/api/comment/saveCommentNotify", body).then((response) => {
+          if (response.data.success) {
+            console.log(response.data);
+          } else {
+            alert("comment notify failed");
+          }
+        });
       } else {
         alert("코멘트 저장실패");
       }

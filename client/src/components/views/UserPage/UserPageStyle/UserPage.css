@@ -1,0 +1,7 @@
+.post_image:hover {
+  filter: brightness(120%);
+}
+
+.post_image:active {
+  filter: brightness(80%);
+}

@@ -4,6 +4,7 @@ import Avatar from "antd/lib/avatar/avatar";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import Follow from "../../../_utils/Follow/Follow";
+import "./UserPageStyle/UserPage.css";
 function UserPage(props) {
   const [Photos, setPhotos] = useState([]);
   const [Skip, setSkip] = useState(0);
@@ -14,6 +15,7 @@ function UserPage(props) {
   const [follower, setFollower] = useState([]);
   const [following, setFollowing] = useState([]);
   const userPageId = props.match.params.id;
+
   useEffect(() => {
     let body = {
       skip: Skip,
@@ -88,6 +90,7 @@ function UserPage(props) {
             style={{ cursor: "pointer", width: 293, height: 293 }}
             cover={
               <img
+                className="post_image"
                 style={{ width: 293, height: 293, objectFit: "cover" }}
                 src={`http://localhost:5000/${photo.images[0]}`}
                 alt="사진"
@@ -121,7 +124,7 @@ function UserPage(props) {
               {userInfo?.nickname}
             </div>
             {userPageId === props.user.userData?._id ? (
-              <div>
+              <div style={{ marginLeft: 5 }}>
                 <Button>
                   <Link to="/setting">프로필 편집</Link>
                 </Button>
@@ -146,14 +149,17 @@ function UserPage(props) {
           {/* 게시물, 게시물수/ 팔로워, 팔로워 수 / 팔로우, 팔로우 수  */}
           <br />
           <div>
-            게시물 {postLength} &nbsp;&nbsp;팔로워 {follower.length}{" "}
-            &nbsp;&nbsp;팔로우 {following.length}
+            게시물 <b>{postLength}</b> &nbsp;&nbsp;팔로워{" "}
+            <b>{follower.length}</b> &nbsp;&nbsp;팔로우{" "}
+            <b>{following.length}</b>
           </div>
           <br />
-          <div>
+          <div style={{ fontSize: "1.2rem" }}>
             <b>{userInfo?.name}</b>
           </div>{" "}
-          <div style={{ width: 320 }}>{userInfo?.description}</div>
+          <div style={{ width: 320, fontSize: "1.1rem" }}>
+            {userInfo?.description}
+          </div>
           {/* 유저 description */}
         </div>
       </div>

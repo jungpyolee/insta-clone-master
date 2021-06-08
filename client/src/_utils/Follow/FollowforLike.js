@@ -62,13 +62,13 @@ function FollowforLike(props) {
         }
       }
     });
-    axios.post("/api/follow/getFollower", body).then((response) => {
+    axios.get("/api/follow/getFollower", { params: body }).then((response) => {
       if (response.data.success) {
         setFollower(response.data.follower);
       } else alert("팔로워 가져오기실패");
     });
 
-    axios.post("/api/follow/getFollowing", body).then((response) => {
+    axios.get("/api/follow/getFollowing", { params: body }).then((response) => {
       if (response.data.success) {
         setFollowing(response.data.following);
       } else alert("팔로잉 가져오기실패");

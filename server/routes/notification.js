@@ -7,8 +7,8 @@ const { Notification } = require("../models/Notification");
 //             Notification
 //=================================
 
-router.post("/getNotify", (req, res) => {
-  Notification.find({ myId: req.body.myId, notificationType: "comment" })
+router.get("/getNotify", (req, res) => {
+  Notification.find({ myId: req.query.myId, notificationType: "comment" })
     .populate("userId")
     .exec((err, commentNotify) => {
       if (err) {

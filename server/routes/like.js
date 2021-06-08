@@ -2,19 +2,18 @@ const express = require("express");
 const router = express.Router();
 
 const { Like } = require("../models/Like");
-const { Notification } = require("../models/Notification");
 
 //=================================
 //             Like
 //=================================
 
-router.post("/getLikes", (req, res) => {
+router.get("/getLikes", (req, res) => {
   let variable = {};
 
-  if (req.body.postId) {
-    variable = { postId: req.body.postId };
+  if (req.query.postId) {
+    variable = { postId: req.query.postId };
   } else {
-    variable = { commentId: req.body.commentId };
+    variable = { commentId: req.query.commentId };
   }
 
   Like.find(variable)
@@ -49,7 +48,7 @@ router.post("/uplike", (req, res) => {
   });
 });
 
-router.post("/unlike", (req, res) => {
+router.delete("/unlike", (req, res) => {
   let variable = {};
 
   if (req.body.postId) {

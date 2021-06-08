@@ -79,7 +79,7 @@ function LandingPageComment(props) {
 
   useEffect(() => {
     let variable = { postId: postId, userId: user.userData?._id };
-    axios.post("/api/like/getLikes", variable).then((response) => {
+    axios.get("/api/like/getLikes", { params: variable }).then((response) => {
       if (response.data.success) {
         //   좋아요수
 

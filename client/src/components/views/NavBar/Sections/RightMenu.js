@@ -33,26 +33,28 @@ function RightMenu(props) {
       myId: user.userData._id,
     };
     // user.userData._id 의 notification 정보가져와서 setData에 넣어주기
-    axios.post("/api/notification/getNotify", body).then((response) => {
-      if (response.data.success) {
-        response.data.commentNotify.map((notify) => {
-          if (notify.userId._id === notify.myId) {
-            setData(data);
-          } else {
-            setData(
-              data.concat({
-                update: `${notify.userId.nickname}님이 댓글을 남겼습니다.`,
-                timestamp: Number(new Date(notify.createdAt)),
-                image: notify.userId.image,
-                postId: notify.postId,
-              })
-            );
-          }
-        });
-      } else {
-        alert("Fail to getNotify");
-      }
-    });
+    axios
+      .get("/api/notification/getNotify", { params: body })
+      .then((response) => {
+        if (response.data.success) {
+          response.data.commentNotify.map((notify) => {
+            if (notify.userId._id === notify.myId) {
+              setData(data);
+            } else {
+              setData(
+                data.concat({
+                  update: `${notify.userId.nickname}님이 댓글을 남겼습니다.`,
+                  timestamp: Number(new Date(notify.createdAt)),
+                  image: notify.userId.image,
+                  postId: notify.postId,
+                })
+              );
+            }
+          });
+        } else {
+          alert("Fail to getNotify");
+        }
+      });
 
     if (user.userData && user.userData.image) {
       setAvatar(user.userData.image);

@@ -24,7 +24,7 @@ function Like(props) {
   }
 
   useEffect(() => {
-    axios.post("/api/like/getLikes", variable).then((response) => {
+    axios.get("/api/like/getLikes", { params: variable }).then((response) => {
       if (response.data.success) {
         //   좋아요수
         setLikes(response.data.likes.length);
@@ -53,7 +53,7 @@ function Like(props) {
         }
       });
     } else {
-      axios.post("/api/like/unlike", variable).then((response) => {
+      axios.delete("/api/like/unlike", variable).then((response) => {
         if (response.data.success) {
           setLikes(likes - 1);
           setLiked(false);

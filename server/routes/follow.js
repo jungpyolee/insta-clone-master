@@ -8,8 +8,8 @@ const { Notification } = require("../models/Notification");
 //           Follow
 //=================================
 
-router.post("/getFollower", (req, res) => {
-  Follow.find({ followTo: req.body.getFollower }) //페이지주인이 누구한테 팔로잉받는지
+router.get("/getFollower", (req, res) => {
+  Follow.find({ followTo: req.query.getFollower }) //페이지주인이 누구한테 팔로잉받는지
     .populate("followFrom")
     .exec((err, follower) => {
       if (err) return res.status(400).json({ success: false, err });
@@ -17,8 +17,8 @@ router.post("/getFollower", (req, res) => {
     }); //여기의 followFrom을 맵하면 누가 페이지주인을 팔로우하는지 목록이나옴
 });
 
-router.post("/getFollowing", (req, res) => {
-  Follow.find({ followFrom: req.body.getFollowing }) //페이지주인이 누구를 팔로우하는지
+router.get("/getFollowing", (req, res) => {
+  Follow.find({ followFrom: req.query.getFollowing }) //페이지주인이 누구를 팔로우하는지
     .populate("followTo")
     .exec((err, following) => {
       if (err) return res.status(400).json({ success: false, err });

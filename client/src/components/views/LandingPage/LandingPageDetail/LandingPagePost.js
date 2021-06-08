@@ -25,7 +25,7 @@ function LandingPagePost(props) {
   useEffect(() => {
     let body = { getFollowing: user.userData?._id };
 
-    axios.post("/api/follow/getFollowing", body).then((response) => {
+    axios.get("/api/follow/getFollowing", { params: body }).then((response) => {
       if (response.data.success) {
         setMyFollowingIds(
           response.data.following.map((item) =>

@@ -121,18 +121,21 @@ function LandingPageComment(props) {
                 refreshFunction={refreshFunction}
                 postId={postId}
               />
-              <div>
-                <MessageOutlined
-                  style={{ cursor: "pointer", marginLeft: 10, marginRight: 10 }}
-                />
-              </div>
-              <div>
-                <SendOutlined style={{ cursor: "pointer" }} />
-              </div>
+              <Link to={`/post/${postId}`}>
+                <div>
+                  <MessageOutlined
+                    style={{
+                      color: "black",
+                      cursor: "pointer",
+                      marginLeft: 10,
+                      marginRight: 10,
+                    }}
+                  />
+                </div>
+              </Link>
+              <div></div>
             </div>
-            <div>
-              <SaveOutlined style={{ marginRight: 5 }} />
-            </div>
+            <div></div>
           </div>{" "}
           <div style={{ marginLeft: 8 }}>
             {likes === 0 ? <p>가장 먼저 좋아요를 눌러보세요!</p> : null}

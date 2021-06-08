@@ -134,7 +134,7 @@ function PostDetail(props) {
                 </Link>
               </div>
 
-              <div>
+              <div style={{ fontSize: "1.2rem" }}>
                 <DeleteOutlined onClick={postDelete} />
               </div>
             </div>

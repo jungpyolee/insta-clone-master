@@ -41,7 +41,7 @@ function LikeDetail(props) {
           }}
         >
           <Link style={{ color: "black" }} to={`/user/${like.userId._id}`}>
-            {like.userId.nickname}
+            <b>{like.userId.nickname}</b>
             <br />
           </Link>
 
@@ -80,7 +80,12 @@ function LikeDetail(props) {
             >
               <div style={{ fontSize: "1.1rem", fontWeight: 600 }}>좋아요</div>
               <div
-                style={{ fontSize: "1.4rem", position: "absolute", right: 20 }}
+                style={{
+                  fontSize: "1.4rem",
+                  position: "absolute",
+                  right: 20,
+                  top: -2,
+                }}
               >
                 <CloseOutlined
                   style={{ cursor: "pointer" }}

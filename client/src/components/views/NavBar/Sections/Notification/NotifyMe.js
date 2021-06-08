@@ -5,7 +5,7 @@ import Popover from "react-bootstrap/Popover";
 import Button from "react-bootstrap/Button";
 import moment from "moment";
 import { reactLocalStorage } from "reactjs-localstorage";
-import { Bell, BellOff, BookOpen, AlertTriangle } from "react-feather";
+import { Bell, BookOpen, AlertTriangle } from "react-feather";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./NotifyMe.scss";
 import Avatar from "antd/lib/avatar/avatar";
@@ -51,7 +51,7 @@ const NotifyMe = (props) => {
     if (readIndex === -1) {
       readIndex = data.length;
     } else {
-      return;
+      return readIndex;
     }
     setReadIndex(readIndex); // If there are messages and readIndex is pointing to at least one message, we will show the count bubble.
 

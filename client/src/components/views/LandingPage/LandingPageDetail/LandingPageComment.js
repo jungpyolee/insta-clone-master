@@ -142,7 +142,7 @@ function LandingPageComment(props) {
                         </div>
                       </Link>
                     </b>
-                    <div className="tooltipbox">
+                    <div className="tooltipbox2">
                       <UserHover user={likeDetail[0]?.userId} />
                     </div>
                   </div>
@@ -161,7 +161,7 @@ function LandingPageComment(props) {
                         </div>
                       </Link>
                     </b>
-                    <div className="tooltipbox">
+                    <div className="tooltipbox2">
                       <UserHover user={likeDetail[0]?.userId} />
                     </div>
                   </div>

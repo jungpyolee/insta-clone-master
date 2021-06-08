@@ -16,20 +16,20 @@
   font-size: 1rem;
 }
 
-.tooltips .tooltipbox {
+.tooltips .tooltipbox2 {
   visibility: hidden;
   opacity: 0;
   transition: opacity 0.7s;
   position: fixed;
-  top: 310px;
-  right: 450px;
+  top: 170px;
+  left: 470px;
   z-index: 99;
 }
 
 .nickname:hover {
   text-decoration: underline;
 }
-.nicknamebox:hover .tooltipbox {
+.nicknamebox:hover .tooltipbox2 {
   visibility: visible;
   opacity: 1;
 }

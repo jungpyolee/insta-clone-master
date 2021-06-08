@@ -12,8 +12,10 @@ import UserHover from "../../../../_utils/UserHover";
 import { Link } from "react-router-dom";
 import LikeDetail from "../../../../_utils/LikeDetail";
 import LandingPageSingleComment from "./LandingPageSingleComment";
+import timeBefore from "../../../../_utils/timeBefore";
 function LandingPageComment(props) {
   const postId = props.postId;
+  const post = props.post;
   const user = useSelector((state) => state.user);
   const [commentValue, setCommentValue] = useState("");
   const [likes, setLikes] = useState(0);
@@ -21,6 +23,8 @@ function LandingPageComment(props) {
   const [likeDetail, setLikeDetail] = useState([]);
   const [likeDetailBox, setLikeDetailBox] = useState(false);
   const postWriterId = props.post.writer._id;
+  const postWriter = props.post.writer;
+  const postDescription = props.post.description;
   const onLikeDetail = () => {
     setLikeDetailBox(!likeDetailBox);
   };
@@ -131,6 +135,7 @@ function LandingPageComment(props) {
             </div>
           </div>{" "}
           <div style={{ marginLeft: 8 }}>
+            {likes === 0 ? <p>가장 먼저 좋아요를 눌러보세요!</p> : null}
             {likes === 1 ? (
               <div>
                 <div className="tooltips">
@@ -176,6 +181,25 @@ function LandingPageComment(props) {
           </div>
         </div>
       </div>
+
+      {post && (
+        <div style={{ display: "flex", alignItems: "flex-end" }}>
+          <b style={{ marginLeft: 9, marginRight: 9 }}>
+            <Link to={`/user/${post.writer._id}`}>{post.writer.nickname}</Link>
+          </b>{" "}
+          <div>{post.description}</div>{" "}
+          <div
+            style={{
+              marginLeft: 9,
+              paddingBottom: 1.5,
+              fontSize: "0.7rem",
+              color: "gray",
+            }}
+          >
+            {timeBefore(post.createdAt)}
+          </div>
+        </div>
+      )}
       {/* Comment Lists */}
       <div
         className="commentlist"

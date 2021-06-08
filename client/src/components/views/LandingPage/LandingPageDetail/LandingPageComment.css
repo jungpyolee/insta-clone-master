@@ -20,9 +20,9 @@
   visibility: hidden;
   opacity: 0;
   transition: opacity 0.7s;
-  position: fixed;
-  top: 220px;
-  left: 470px;
+  position: absolute;
+  top: -350px;
+  left: 0px;
   z-index: 99;
 }
 

@@ -190,7 +190,7 @@ function LandingPageComment(props) {
           props.commentLists.map(
             (comment, index) =>
               !comment.responseTo && (
-                <div>
+                <div key={index}>
                   <LandingPageSingleComment
                     refreshFunction={props.refreshFunction}
                     comment={comment}

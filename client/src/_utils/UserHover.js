@@ -60,7 +60,7 @@ function UserHover(props) {
       <div className="profile">
         {/* 유저데이터 */}
 
-        <div classname="profile_left">
+        <div className="profile_left">
           <Avatar
             src={`${userId?.image}`}
             style={{ marginTop: 5, width: 56, height: 56 }}
@@ -109,7 +109,7 @@ function UserHover(props) {
       <div className="posts">
         {/* 최근 포스트 3개 */}
         {photos.map((photo, index) => (
-          <div className="postbox">
+          <div className="postbox" key={index}>
             <a href={`http://localhost:3000/post/${photo._id}`}>
               <Card
                 bodyStyle={{ padding: 0 }}

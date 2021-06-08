@@ -56,7 +56,7 @@ function LandingPagePost(props) {
   }, [user.userData]);
 
   const renderPosts = Photos.map((photo, index) => (
-    <LandingPagePostDetail postId={photo._id} />
+    <LandingPagePostDetail key={index} postId={photo._id} />
   ));
   return (
     <div>

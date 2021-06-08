@@ -79,11 +79,14 @@ router.get("/logout", auth, (req, res) => {
   );
 });
 
-router.post("/getRecommend", (req, res) => {
-  User.find({ _id: { $nin: req.body.myFollowingIds } }).exec((err, user) => {
-    if (err) return res.json({ success: false, err });
-    return res.status(200).json({ success: true, user });
-  });
+router.post("/getRecommend", auth, (req, res) => {
+  let ids = [...req.body.myFollowingIds, req.user._id];
+  User.find({ _id: { $nin: ids } })
+    .limit(5)
+    .exec((err, user) => {
+      if (err) return res.json({ success: false, err });
+      return res.status(200).json({ success: true, user });
+    });
 });
 
 router.post("/setting", auth, (req, res) => {

@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import Follow from "../../../../_utils/Follow/Follow";
 import LandingPagePostDetail from "./LandingPagePostDetail";
+import SideBar from "./SideBar";
 
 function LandingPagePost(props) {
   const user = useSelector((state) => state.user);
@@ -32,11 +33,7 @@ function LandingPagePost(props) {
             myFollowingIds.concat(item.followTo._id)
           )
         );
-        props.refreshMyFollowing(
-          response.data.following.map((item) =>
-            myFollowingIds.concat(item.followTo._id)
-          )
-        );
+
         if (myFollowingIds) {
           let variables = {
             id: response.data.following.map((item) =>
@@ -57,24 +54,22 @@ function LandingPagePost(props) {
         alert("내팔로잉정보가져오기실패");
       }
     });
-  }, [user]);
+  }, [user.userData]);
 
+  console.log(myFollowingIds);
   const renderPosts = Photos.map((photo, index) => (
     <LandingPagePostDetail postId={photo._id} />
   ));
   return (
-    <div
-      style={{
-        marginRight: 28,
-      }}
-    >
-      <div>{renderPosts}</div>
-
-      {/* <Follow
-                  refreshFollower={refreshFollower}
-                  refreshFollowing={refreshFollowing}
-                  // userId={map해서 해당포스트주인의 id넣기}
-                /> */}
+    <div>
+      <div
+        style={{
+          marginRight: 28,
+        }}
+      >
+        <div>{renderPosts}</div>
+      </div>
+      <div>{myFollowingIds && <SideBar myFollowingIds={myFollowingIds} />}</div>
     </div>
   );
 }

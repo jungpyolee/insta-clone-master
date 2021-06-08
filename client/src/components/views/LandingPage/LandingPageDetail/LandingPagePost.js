@@ -4,7 +4,6 @@ import { useSelector } from "react-redux";
 import Follow from "../../../../_utils/Follow/Follow";
 import LandingPagePostDetail from "./LandingPagePostDetail";
 import SideBar from "./SideBar";
-
 function LandingPagePost(props) {
   const user = useSelector((state) => state.user);
   const [Photos, setPhotos] = useState([]);
@@ -56,7 +55,6 @@ function LandingPagePost(props) {
     });
   }, [user.userData]);
 
-  console.log(myFollowingIds);
   const renderPosts = Photos.map((photo, index) => (
     <LandingPagePostDetail postId={photo._id} />
   ));
@@ -69,7 +67,9 @@ function LandingPagePost(props) {
       >
         <div>{renderPosts}</div>
       </div>
-      <div>{myFollowingIds && <SideBar myFollowingIds={myFollowingIds} />}</div>
+      <div>
+        <SideBar myFollowingIds={myFollowingIds} />
+      </div>
     </div>
   );
 }

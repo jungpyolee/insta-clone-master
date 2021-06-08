@@ -36,7 +36,6 @@ function SideBar(props) {
       if (response.data.success) {
         setRecommend(response.data.user);
       } else {
-        alert("추천유저가져오기실패");
       }
     });
   };

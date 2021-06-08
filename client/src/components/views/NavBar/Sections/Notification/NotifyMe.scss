@@ -86,14 +86,21 @@
 
 .notification-info-panel {
   max-height: 300px;
-  overflow-y: auto;
+  overflow-y: scroll;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
   padding: 0;
+  width: 260px;
+}
+
+.notification-info-panel::-webkit-scrollbar {
+  display: none;
 }
 
 .notification-info-panel .notification-message {
   list-style: none;
   padding: 4px;
-  background-color: #ebebeb;
+  background-color: beige;
   margin-bottom: 3px;
   border: 1px solid #ececec;
   border-radius: 8px;
@@ -112,10 +119,9 @@
 .content {
   list-style: none;
   display: flex;
-  justify-content: center;
 }
 .notification-info-panel .notification-message.unread {
-  background-color: #fefefe;
+  background-color: white;
   color: black;
-  width: 260px;
+  width: 250px;
 }

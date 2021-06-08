@@ -15,13 +15,6 @@ function LandingPagePost(props) {
   const [follower, setFollower] = useState([]);
   const [following, setFollowing] = useState([]);
 
-  const refreshFollower = (newFollower) => {
-    setFollower(newFollower);
-  };
-
-  const refreshFollowing = (newFollowing) => {
-    setFollowing(newFollowing);
-  };
   useEffect(() => {
     let body = { getFollowing: user.userData?._id };
 

@@ -37,20 +37,20 @@ function RightMenu(props) {
       .get("/api/notification/getNotify", { params: body })
       .then((response) => {
         if (response.data.success) {
-          response.data.commentNotify.map((notify) => {
-            if (notify.userId._id === notify.myId) {
-              setData(data);
-            } else {
-              setData(
-                data.concat({
+          setData(
+            response.data.commentNotify.map((notify) => {
+              if (notify.userId._id === notify.myId) {
+                return null;
+              } else {
+                return {
                   update: `${notify.userId.nickname}님이 댓글을 남겼습니다.`,
                   timestamp: Number(new Date(notify.createdAt)),
                   image: notify.userId.image,
                   postId: notify.postId,
-                })
-              );
-            }
-          });
+                };
+              }
+            })
+          );
         } else {
           alert("Fail to getNotify");
         }
@@ -62,6 +62,7 @@ function RightMenu(props) {
   }, []);
   const [open, setOpen] = useState(false);
 
+  console.log(data);
   const onToggle = () => {
     setOpen(!open);
   };

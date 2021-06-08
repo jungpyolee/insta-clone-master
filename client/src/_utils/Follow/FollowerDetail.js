@@ -2,7 +2,7 @@ import { CloseOutlined } from "@ant-design/icons";
 import Avatar from "antd/lib/avatar/avatar";
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import FollowforLike from "./Follow/FollowforLike";
+import FollowforLike from "./FollowforLike";
 
 function FollowerDetail(props) {
   const [open, setOpen] = useState(true);
@@ -22,10 +22,16 @@ function FollowerDetail(props) {
             alignItems: "center",
           }}
         >
-          <Link to={`/user/${follower.userId._id}`}>
+          <Link
+            onClick={() => {
+              setOpen(!open);
+              props.openHandler();
+            }}
+            to={`/user/${follower.followFrom._id}`}
+          >
             <Avatar
               style={{ width: 44, height: 44 }}
-              src={follower.userId.image}
+              src={follower.followFrom.image}
             ></Avatar>
           </Link>
         </div>
@@ -40,12 +46,19 @@ function FollowerDetail(props) {
             justifyContent: "space-between",
           }}
         >
-          <Link style={{ color: "black" }} to={`/user/${follower.userId._id}`}>
-            <b>{follower.userId.nickname}</b>
+          <Link
+            onClick={() => {
+              setOpen(!open);
+              props.openHandler();
+            }}
+            style={{ color: "black" }}
+            to={`/user/${follower.followFrom._id}`}
+          >
+            <b>{follower.followFrom.nickname}</b>
             <br />
           </Link>
 
-          <FollowforLike userId={follower.userId._id} />
+          <FollowforLike userId={follower.followFrom._id} />
         </div>
       </div>
     );

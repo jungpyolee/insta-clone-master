@@ -2,7 +2,7 @@ import { CloseOutlined } from "@ant-design/icons";
 import Avatar from "antd/lib/avatar/avatar";
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import FollowforLike from "./Follow/FollowforLike";
+import FollowforLike from "./FollowforLike";
 
 function FollowingDetail(props) {
   const [open, setOpen] = useState(true);
@@ -22,10 +22,16 @@ function FollowingDetail(props) {
             alignItems: "center",
           }}
         >
-          <Link to={`/user/${following.userId._id}`}>
+          <Link
+            onClick={() => {
+              setOpen(!open);
+              props.openHandler();
+            }}
+            to={`/user/${following.followTo._id}`}
+          >
             <Avatar
               style={{ width: 44, height: 44 }}
-              src={following.userId.image}
+              src={following.followTo.image}
             ></Avatar>
           </Link>
         </div>
@@ -40,12 +46,19 @@ function FollowingDetail(props) {
             justifyContent: "space-between",
           }}
         >
-          <Link style={{ color: "black" }} to={`/user/${following.userId._id}`}>
-            <b>{following.userId.nickname}</b>
+          <Link
+            style={{ color: "black" }}
+            onClick={() => {
+              setOpen(!open);
+              props.openHandler();
+            }}
+            to={`/user/${following.followTo._id}`}
+          >
+            <b>{following.followTo.nickname}</b>
             <br />
           </Link>
 
-          <FollowforLike userId={following.userId._id} />
+          <FollowforLike userId={following.followTo._id} />
         </div>
       </div>
     );
@@ -78,7 +91,7 @@ function FollowingDetail(props) {
                 position: "relative",
               }}
             >
-              <div style={{ fontSize: "1.1rem", fontWeight: 600 }}>팔로워</div>
+              <div style={{ fontSize: "1.1rem", fontWeight: 600 }}>팔로우</div>
               <div
                 style={{
                   fontSize: "1.4rem",

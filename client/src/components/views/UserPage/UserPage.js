@@ -5,6 +5,8 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import Follow from "../../../_utils/Follow/Follow";
 import "./UserPageStyle/UserPage.css";
+import FollowerDetail from "../../../_utils/Follow/FollowerDetail";
+import FollowingDetail from "../../../_utils/Follow/FollowingDetail";
 function UserPage(props) {
   const [Photos, setPhotos] = useState([]);
   const [Skip, setSkip] = useState(0);
@@ -14,6 +16,17 @@ function UserPage(props) {
   const [userInfo, setUserInfo] = useState("");
   const [follower, setFollower] = useState([]);
   const [following, setFollowing] = useState([]);
+  const [followerBox, setFollowerBox] = useState(false);
+  const [followingBox, setFollowingBox] = useState(false);
+
+  const onFollowerBox = () => {
+    setFollowerBox(!followerBox);
+  };
+
+  const onFollowingBox = () => {
+    setFollowingBox(!followingBox);
+  };
+
   const userPageId = props.match.params.id;
 
   useEffect(() => {
@@ -149,9 +162,17 @@ function UserPage(props) {
           {/* 게시물, 게시물수/ 팔로워, 팔로워 수 / 팔로우, 팔로우 수  */}
           <br />
           <div>
-            게시물 <b>{postLength}</b> &nbsp;&nbsp;팔로워{" "}
-            <b>{follower.length}</b> &nbsp;&nbsp;팔로우{" "}
-            <b>{following.length}</b>
+            <span>
+              게시물 <b>{postLength}</b>
+            </span>
+            &nbsp;&nbsp;
+            <span style={{ cursor: "pointer" }} onClick={onFollowerBox}>
+              팔로워 <b>{follower.length}</b>
+            </span>
+            &nbsp;&nbsp;
+            <span style={{ cursor: "pointer" }} onClick={onFollowingBox}>
+              팔로우 <b>{following.length}</b>
+            </span>
           </div>
           <br />
           <div style={{ fontSize: "1.2rem" }}>
@@ -186,6 +207,51 @@ function UserPage(props) {
       {PostSize >= Limit && (
         <div style={{ display: "flex", justifyContent: "center" }}>
           <button onClick={loadMoreHandler}>더보기</button>
+        </div>
+      )}
+
+      {followerBox && (
+        <div
+          id="followerBox"
+          style={{
+            backgroundColor: "rgba(0,0,0,0.9)",
+            position: "fixed",
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            zIndex: 10,
+          }}
+          onClick={(e) => {
+            e.target.id === "followerBox" && setFollowerBox(!followerBox);
+          }}
+        >
+          <FollowerDetail
+            followerDetail={follower}
+            openHandler={onFollowerBox}
+          />
+        </div>
+      )}
+      {followingBox && (
+        <div
+          id="followingBox"
+          style={{
+            backgroundColor: "rgba(0,0,0,0.9)",
+            position: "fixed",
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            zIndex: 10,
+          }}
+          onClick={(e) => {
+            e.target.id === "followingBox" && setFollowingBox(!followingBox);
+          }}
+        >
+          <FollowingDetail
+            followingDetail={following}
+            openHandler={onFollowingBox}
+          />
         </div>
       )}
     </div>

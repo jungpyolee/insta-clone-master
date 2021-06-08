@@ -47,7 +47,6 @@ function Like(props) {
         if (response.data.success) {
           setLikes(likes + 1);
           setLiked(true);
-          console.log(response.data);
           onRefresh(likes + 1, response.data.result);
         } else {
           alert("좋아요실패");

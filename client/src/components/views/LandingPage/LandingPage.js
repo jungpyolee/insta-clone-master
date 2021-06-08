@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Follow from "../../../_utils/Follow/Follow";
 // import { useSelector } from "react-redux";
 
@@ -10,12 +10,15 @@ import SideBar from "./LandingPageDetail/SideBar";
 // import UserPage from "../UserPage/UserPage";
 
 function LandingPage(props) {
-  // const user = useSelector((state) => state.user);
+  const [myFollowingIds, setMyFollowingIds] = useState([]);
+  const refreshMyFollowing = (ids) => {
+    setMyFollowingIds(ids);
+  };
 
   return (
-    <div style={{ paddingTop: 30 }}>
-      <LandingPagePost />
-      <SideBar />
+    <div style={{ paddingTop: 30, display: "flex" }}>
+      <LandingPagePost refreshMyFollowing={refreshMyFollowing} />
+      {myFollowingIds && <SideBar myFollowingIds={myFollowingIds} />}
 
       <br />
     </div>

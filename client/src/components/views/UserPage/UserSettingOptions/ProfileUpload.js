@@ -14,7 +14,6 @@ function ProfileUpload(props) {
     formData.append("file", files[0]);
     axios.post("/api/photo/image", formData, config).then((response) => {
       if (response.data.success) {
-        console.log(response.data);
         setImages(response.data.filePath);
 
         props.refreshFunction(response.data.filePath);

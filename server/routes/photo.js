@@ -69,7 +69,6 @@ router.get("/photos", (req, res) => {
     .skip(skip)
     .limit(limit)
     .exec((err, photoInfo) => {
-      console.log(photoInfo);
       if (err) return res.status(400).json({ success: false, err });
       return res
         .status(200)
@@ -85,7 +84,6 @@ router.post("/landingPagePhoto", (req, res) => {
     .populate("writer")
     .sort({ createdAt: -1 })
     .exec((err, photoInfo) => {
-      console.log(photoInfo);
       if (err) return res.status(400).json({ success: false, err });
       return res.status(200).json({ success: true, photoInfo });
     });

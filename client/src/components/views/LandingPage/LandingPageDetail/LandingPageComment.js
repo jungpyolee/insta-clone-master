@@ -54,9 +54,8 @@ function LandingPageComment(props) {
 
     axios.post("/api/comment/saveComment", variables).then((response) => {
       if (response.data.success) {
-        console.log(response.data.result);
         props.refreshFunction(response.data.result);
-        console.log(response.data.result);
+
         setCommentValue("");
 
         let body = {
@@ -68,7 +67,6 @@ function LandingPageComment(props) {
         };
         axios.post("/api/comment/saveCommentNotify", body).then((response) => {
           if (response.data.success) {
-            console.log(response.data);
           } else {
             alert("comment notify failed");
           }
@@ -79,7 +77,6 @@ function LandingPageComment(props) {
     });
   };
 
-  console.log(likeDetail[0]?.userId);
   useEffect(() => {
     let variable = { postId: postId, userId: user.userData?._id };
     axios.post("/api/like/getLikes", variable).then((response) => {

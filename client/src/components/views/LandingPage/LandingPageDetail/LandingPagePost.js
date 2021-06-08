@@ -32,6 +32,11 @@ function LandingPagePost(props) {
             myFollowingIds.concat(item.followTo._id)
           )
         );
+        props.refreshMyFollowing(
+          response.data.following.map((item) =>
+            myFollowingIds.concat(item.followTo._id)
+          )
+        );
         if (myFollowingIds) {
           let variables = {
             id: response.data.following.map((item) =>
@@ -57,8 +62,6 @@ function LandingPagePost(props) {
   const renderPosts = Photos.map((photo, index) => (
     <LandingPagePostDetail postId={photo._id} />
   ));
-  console.log(myFollowingIds);
-  console.log(Photos);
   return (
     <div
       style={{

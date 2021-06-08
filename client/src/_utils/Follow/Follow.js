@@ -29,15 +29,13 @@ function Follow(props) {
     axios.post("/api/follow/doIfollowyou", body).then((response) => {
       if (response.data.success) {
         if (response.data.yesorno === 1) {
-          console.log("나는 너 팔로우함 근데 넌하는지볼까??");
-
           axios.post("/api/follow/doyoufollowme", body).then((response) => {
             if (response.data.success) {
               if (response.data.yesorno === 1) {
-                console.log("우리 맞팔임^^ ");
+                // 맞팔
                 setIsFollowing(4);
               } else {
-                console.log("나만 팔로우중;");
+                // 나만팔로우
                 setIsFollowing(3);
               }
             } else {
@@ -45,14 +43,14 @@ function Follow(props) {
             }
           });
         } else {
-          console.log("난 안하는데 넌하는지 볼까?");
+          // 내가 팔로우중 아닐때
           axios.post("/api/follow/doyoufollowme", body).then((response) => {
             if (response.data.success) {
               if (response.data.yesorno === 1) {
-                console.log("너만 나 팔로우하네 ");
+                // 상대만 팔로우
                 setIsFollowing(2);
               } else {
-                console.log("둘다 팔로우안하네");
+                // 둘다 팔로우안함
                 setIsFollowing(1);
               }
             } else {

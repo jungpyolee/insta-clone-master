@@ -79,6 +79,13 @@ router.get("/logout", auth, (req, res) => {
   );
 });
 
+router.post("/getRecommend", (req, res) => {
+  User.find({ _id: { $nin: req.body.myFollowingIds } }).exec((err, user) => {
+    if (err) return res.json({ success: false, err });
+    return res.status(200).json({ success: true, user });
+  });
+});
+
 router.post("/setting", auth, (req, res) => {
   User.findOneAndUpdate(
     { _id: req.user._id },

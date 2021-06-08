@@ -53,7 +53,6 @@ export function logoutUser() {
 }
 
 export function settingUser(data) {
-  console.log(data);
   let body = {
     username: data.username,
     nickname: data.nickname,

@@ -62,7 +62,6 @@ function ProfileSetting(props) {
 
       dispatch(settingUser(body)).then((response) => {
         if (response.payload.success) {
-          console.log("성공적으로 설정했습니다.", response.payload);
         }
       });
     } else {
@@ -76,7 +75,6 @@ function ProfileSetting(props) {
 
       dispatch(settingUser(body)).then((response) => {
         if (response.payload.success) {
-          console.log("성공적으로 설정했습니다.", response.payload);
         }
       });
     }

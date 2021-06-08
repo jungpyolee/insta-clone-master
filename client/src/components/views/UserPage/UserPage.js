@@ -44,7 +44,7 @@ function UserPage(props) {
         } else {
           setPhotos(response.data.photoInfo);
         }
-        console.log(response.data);
+
         setPostSize(response.data.postSize);
       } else {
         alert("사진을 가져오는데 실패했습니다.");
@@ -56,7 +56,6 @@ function UserPage(props) {
     axios.post("/api/photo/postLength", body).then((response) => {
       if (response.data.success) {
         setPostLength(response.data.postLength);
-        console.log(response.data);
       } else {
         alert("게시물수 조회 실패");
       }

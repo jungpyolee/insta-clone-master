@@ -25,7 +25,7 @@ router.post("/saveComment", (req, res) => {
 
 router.post("/saveCommentNotify", (req, res) => {
   const notification = new Notification(req.body);
-  console.log(req.body);
+
   notification.save((err, notify) => {
     if (err) return res.json({ success: false, err });
     res.json({ success: true });

@@ -22,7 +22,7 @@ const NotifyMe = (props) => {
   const ref = useRef(null); // Props passed to the component
 
   const data = props.data;
-  console.log(data);
+
   const storageKey = props.storageKey || "notification_timeline_storage_id";
   const key = props.notific_key;
   const notificationMsg = props.notific_value;

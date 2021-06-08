@@ -47,10 +47,8 @@ function UserHover(props) {
     axios.get("/api/photo/photos", { params: body }).then((response) => {
       if (response.data.success) {
         setPhotos(response.data.photoInfo);
-        console.log(response.data.photoInfo);
-        console.log(response.data.postSize);
+
         setPostSize(response.data.postSize);
-        console.log("가져왔음!");
       } else {
         alert("사진을 가져오는데 실패했습니다.");
       }

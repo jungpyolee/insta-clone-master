@@ -35,7 +35,6 @@ function RightMenu(props) {
     // user.userData._id 의 notification 정보가져와서 setData에 넣어주기
     axios.post("/api/notification/getNotify", body).then((response) => {
       if (response.data.success) {
-        console.log(response.data);
         response.data.commentNotify.map((notify) => {
           if (notify.userId._id === notify.myId) {
             setData(data);

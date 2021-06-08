@@ -19,7 +19,6 @@ function LandingPagePostDetail(props) {
     axios.post("/api/photo/detail", body).then((response) => {
       if (response.data.success) {
         setPost(response.data.photoinfo[0]);
-        console.log(response.data);
       } else {
         alert("사진가져오기 실패");
       }

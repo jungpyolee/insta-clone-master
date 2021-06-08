@@ -51,7 +51,7 @@ const NotifyMe = (props) => {
     if (readIndex === -1) {
       readIndex = data.length;
     } else {
-      return readIndex;
+      return;
     }
     setReadIndex(readIndex); // If there are messages and readIndex is pointing to at least one message, we will show the count bubble.
 

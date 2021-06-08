@@ -114,7 +114,7 @@ function UserPage(props) {
             alignItems: "flex-start",
           }}
         >
-          <Avatar src={userInfo.image} size={160}></Avatar>
+          <Avatar src={userInfo?.image} size={160}></Avatar>
         </div>
         <div style={{ width: "66%" }}>
           <div

@@ -67,9 +67,7 @@ function LandingPagePost(props) {
       >
         <div>{renderPosts}</div>
       </div>
-      <div>
-        <SideBar myFollowingIds={myFollowingIds} />
-      </div>
+      <div>{myFollowingIds && <SideBar myFollowingIds={myFollowingIds} />}</div>
     </div>
   );
 }

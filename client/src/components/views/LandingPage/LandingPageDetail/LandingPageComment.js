@@ -224,14 +224,6 @@ function LandingPageComment(props) {
                     likeDetail={likeDetail}
                     postId={postId}
                   />
-                  {/* <div style={{ display: "none" }}>
-                    <ReplyComment
-                      parentCommentId={comment._id}
-                      refreshFunction={props.refreshFunction}
-                      postId={postId}
-                      commentLists={props.commentLists}
-                    />
-                  </div> */}
                 </div>
               )
           )}
@@ -242,10 +234,11 @@ function LandingPageComment(props) {
         <Form style={{ display: "flex" }} onSubmit={onSubmit}>
           <input
             style={{
-              width: "100%",
+              marginLeft: -1,
+              width: "87%",
               borderRadius: "3px",
               border: "1px solid lightgray",
-              borderLeft: "none",
+              borderLeft: "0.5px solid lightgray",
             }}
             onChange={handleClick}
             value={commentValue}
@@ -254,7 +247,7 @@ function LandingPageComment(props) {
           <Button
             onClick={onSubmit}
             type="primary"
-            style={{ width: "20%", height: "52px" }}
+            style={{ marginLeft: 0, width: "15%", height: "52px" }}
           >
             {" "}
             <b>게시</b>

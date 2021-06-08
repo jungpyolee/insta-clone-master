@@ -43,7 +43,7 @@ function LandingPagePostDetail(props) {
         height: 600,
 
         marginTop: 37,
-        marginBottom: 320,
+        marginBottom: 100,
       }}
     >
       {" "}

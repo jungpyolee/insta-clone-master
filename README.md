@@ -1,18 +1,52 @@
-인스타 클론코딩
+# 인스타그램 클론코딩
 
-- John Ahn의 Boilerplate 사용
+> John Ahn님의 [boilerplate-mern-stack](https://github.com/jaewonhimnae/boilerplate-mern-stack)을 기반으로 제작한 인스타그램 클론코딩 프로젝트입니다.
 
-<!-- 1. make dev.js file inside config folder
-2. put mongoDB info into dev.js file  -->
+## 사용한 스택
 
-1. Type " npm install " inside the root directory ( Download Server Dependencies )
-2. Type " npm install " inside the client directory ( Download Front-end Dependencies )
+> MongoDB
+> Express
+> React
+> Node
 
-기능 설명
+## 기능 설명
 
-1. 로그인 페이지에서 로그인하여 랜딩페이지로 이동
-   1-1. 로그인 페이지에서 가입하기 버튼 클릭하여 회원가입 후 로그인
+1. 회원가입
+   <br/>
+   <img style="width: 300px;" src="./client/src/gifs/1.gif">
 
-2. 랜딩페이지의 유저아이콘 -프로필 클릭하여 유저페이지로 이동
+2. 로그인
+   <br/>
+   <img style="width: 300px;" src="./client/src/gifs/2.gif">
 
-3. 랜딩페이지의 유저아이콘 - 설정 클릭하여 프로필 사진 설정
+3. 회원정보수정
+   <br/>
+   <img style="width: 300px;" src="./client/src/gifs/3.gif">
+
+4. 포스트작성
+   <br/>
+   <img style="width: 300px;" src="./client/src/gifs/4.gif">
+
+5. 랜딩페이지: 추천유저 팔로우
+   <br/>
+   <img style="width: 300px;" src="./client/src/gifs/5.gif">
+
+6. 랜딩페이지: 팔로우한 유저의 포스트 조회
+   <br/>
+   <img style="width: 300px;" src="./client/src/gifs/5-1.gif">
+
+7. 팔로우한 유저 포스트에 좋아요와 댓글남기기
+   <br/>
+   <img style="width: 300px;" src="./client/src/gifs/5-2.gif">
+
+8. 유저페이지 기능
+   <br/>
+   <img style="width: 300px;" src="./client/src/gifs/6.gif">
+
+9. 포스트디테일
+   <br/>
+   <img style="width: 300px;" src="./client/src/gifs/7.gif">
+
+10. 댓글 알림기능
+    <br/>
+    <img style="width: 300px;" src="./client/src/gifs/8.gif">
